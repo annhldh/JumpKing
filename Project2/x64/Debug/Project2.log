@@ -1,0 +1,55 @@
+﻿  BaseObject.cpp
+D:\Program Files\Project2\Project2\CommonFunc.h(54,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
+  (compiling source file 'BaseObject.cpp')
+  
+D:\Program Files\Project2\Project2\CommonFunc.h(64,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+  (compiling source file 'BaseObject.cpp')
+  
+  CommonFunc.cpp
+D:\Program Files\Project2\Project2\CommonFunc.h(54,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
+  (compiling source file 'CommonFunc.cpp')
+  
+D:\Program Files\Project2\Project2\CommonFunc.h(64,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+  (compiling source file 'CommonFunc.cpp')
+  
+  game_map.cpp
+D:\Program Files\Project2\Project2\CommonFunc.h(54,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
+  (compiling source file 'game_map.cpp')
+  
+D:\Program Files\Project2\Project2\CommonFunc.h(64,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+  (compiling source file 'game_map.cpp')
+  
+  ImpTimer.cpp
+  main.cpp
+D:\Program Files\Project2\Project2\CommonFunc.h(54,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
+  (compiling source file 'main.cpp')
+  
+D:\Program Files\Project2\Project2\CommonFunc.h(64,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+  (compiling source file 'main.cpp')
+  
+  MainObject.cpp
+D:\Program Files\Project2\Project2\CommonFunc.h(54,2): warning C4091: 'typedef ': ignored on left of 'Map' when no variable is declared
+  (compiling source file 'MainObject.cpp')
+  
+D:\Program Files\Project2\Project2\CommonFunc.h(64,2): warning C4091: 'typedef ': ignored on left of 'Input' when no variable is declared
+  (compiling source file 'MainObject.cpp')
+  
+D:\Program Files\Project2\Project2\MainObject.cpp(108,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(109,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(230,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(240,29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(266,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(267,42): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(269,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(270,33): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(278,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(294,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(312,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(313,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(315,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(316,45): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(324,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(334,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Program Files\Project2\Project2\MainObject.cpp(349,43): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Project2.vcxproj -> D:\Program Files\Project2\x64\Debug\Project2.exe
