@@ -156,7 +156,7 @@ void King::MoveAction(Map &map)
 	}
 	if (frame_ >= NUMBER_OF_FRAME) frame_ = 0;
     delta_x = 0;
- /*   delta_y = 0*/;
+ /*   delt_y = 0*/;
 }
 
 void King :: CenterEntityOnMap(GameMap& game_map)
