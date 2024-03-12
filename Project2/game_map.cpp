@@ -32,8 +32,8 @@ void GameMap::LoadMap(char* name)
 			}
 		}
 	}
-	game_map_.max_x_ = (game_map_.max_x_ + 1) * TILE_SIZE;
-	game_map_.max_y_ = (game_map_.max_y_ + 1) * TILE_SIZE;
+	game_map_.max_x_ = MAX_MAP_X * TILE_SIZE;
+	game_map_.max_y_ = MAX_MAP_Y * TILE_SIZE;
 
 	game_map_.start_x_ = 0;
 	game_map_.start_y_ = 0;

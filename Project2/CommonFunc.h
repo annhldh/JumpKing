@@ -10,14 +10,14 @@
 #include "Object.h"
 
 #define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 640
+#define SCREEN_HEIGHT 730
 
 #define MAX_TILES  30
 #define BLANK_TILE 0
-#define TILE_SIZE  64
+#define TILE_SIZE  32
 
-#define MAX_MAP_X 23
-#define MAX_MAP_Y 64
+#define MAX_MAP_X 46
+#define MAX_MAP_Y 99
 const int COLOR_KEY_R = 180;
 const int COLOR_KEY_G = 180;
 const int COLOR_KEY_B = 180;
@@ -26,6 +26,7 @@ const int SCREEN_BPP = 32;
 
 #define BLANK_TILE 0
 
+#define NUMBER_OF_FRAME 8
 
  struct Map
 {

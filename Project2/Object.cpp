@@ -8,13 +8,16 @@ void Object::LoadImg(std::string path, SDL_Renderer* des) {
     SDL_SetColorKey(newSurface ,SDL_TRUE, SDL_MapRGB(newSurface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
     newText = SDL_CreateTextureFromSurface(des, newSurface);
 
+
+    rect_.w = newSurface->w;
+    rect_.h = newSurface->h;
+    
     SDL_FreeSurface(newSurface);
-    SDL_QueryTexture(newText, NULL, NULL, &rect_.w, &rect_.h);
     mTexture = newText;
     
 }
 
-void Object::Render(int x, int y, SDL_Renderer* des, const SDL_Rect* clip /* NULL */)
+void Object::Render(int x, int y, SDL_Renderer* des, const SDL_Rect* clip /* NULL */   )
 {
 
     SDL_Rect renderquad = {x, y, rect_.w, rect_.h };
