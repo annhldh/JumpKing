@@ -141,7 +141,10 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="CommonFunc.h" />
     <ClInclude Include="King.h" />
+    <ClInclude Include="SFX.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game_map.cpp" />
@@ -149,6 +152,9 @@
     <ClCompile Include="CommonFunc.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SFX.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

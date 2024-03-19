@@ -1,12 +1,2 @@
-﻿  King.cpp
-C:\Users\ADMIN\Project2\Project2\King.cpp(216,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(217,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(218,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(219,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(249,21): warning C4244: '/=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(278,21): warning C4244: '/=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(297,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(298,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(299,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\ADMIN\Project2\Project2\King.cpp(300,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Project2.vcxproj -> C:\Users\ADMIN\Project2\Debug\Project2.exe
+﻿  main.cpp
+  Project2.vcxproj -> D:\Program Files\Project2\Debug\Project2.exe

@@ -4,6 +4,7 @@
 #include "King.h"
 void GameMap::LoadMap(char* name)
 {
+
 	FILE* fp = NULL;
 	fopen_s(&fp, name, "rb");
 	if (fp == NULL)
@@ -12,7 +13,7 @@ void GameMap::LoadMap(char* name)
 	}
 	game_map_.max_x_ = 0;
 	game_map_.max_y_ = 0;
-
+	game_map_.Ice_block = {};
 	for (int i = 0; i < MAX_MAP_Y; i++)
 	{
 		for (int j = 0; j < MAX_MAP_X; j++)
@@ -29,6 +30,7 @@ void GameMap::LoadMap(char* name)
 				{
 					game_map_.max_y_ = i;
 				}
+				if (val == 60) game_map_.Ice_block.push_back({ i,j });
 			}
 		}
 	}
@@ -64,6 +66,8 @@ void GameMap::LoadTiles(SDL_Renderer* screen)
 
 void GameMap::DrawMap(SDL_Renderer* screen)
 {
+	time++;
+	if (time % 480 == 0) Refresh_Ice();
 	int x1 = 0;
 	int x2 = 0;
 
@@ -93,6 +97,7 @@ void GameMap::DrawMap(SDL_Renderer* screen)
 			{
 				tile_mat[val].rect_.x = j;
 				tile_mat[val].rect_.y = i;
+
 				tile_mat[val].Render(j,i,screen, NULL);
 			}
 			map_x++;
@@ -100,4 +105,14 @@ void GameMap::DrawMap(SDL_Renderer* screen)
 		}
 		map_y++;
 	}
+}
+
+void GameMap:: Refresh_Ice()
+{
+
+	for (auto t : game_map_.Ice_block)
+	{
+		if(game_map_.tile[t.x][t.y]<60) game_map_.tile[t.x][t.y]++;
+	}
+
 }
