@@ -12,11 +12,13 @@ void Object::LoadImg(std::string path, SDL_Renderer* des) {
     mTexture = newText;
 }
 
-void Object::Render(int x, int y, SDL_Renderer* des, const SDL_Rect* clip /* NULL */   )
+void Object::Render(int x, int y, SDL_Renderer* des, const SDL_Rect* clip /* NULL */,double angle , SDL_Point* center,SDL_Rect* renderQuad )
 {
+    SDL_Rect renderquad;
+    if (renderQuad != NULL) renderquad = *renderQuad;
+    else renderquad = { x, y, rect_.w, rect_.h };
 
-    SDL_Rect renderquad = {x, y, rect_.w, rect_.h };
-    SDL_RenderCopy(des, mTexture, clip, &renderquad);
+    SDL_RenderCopyEx(des, mTexture, clip, &renderquad,angle,center,SDL_FLIP_NONE);
 
 }
 

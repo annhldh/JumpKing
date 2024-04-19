@@ -14,6 +14,7 @@ void GameMap::LoadMap(char* name)
 	game_map_.max_x_ = 0;
 	game_map_.max_y_ = 0;
 	game_map_.Ice_block = {};
+	game_map_.Laser_block = {};
 	for (int i = 0; i < MAX_MAP_Y; i++)
 	{
 		for (int j = 0; j < MAX_MAP_X; j++)
@@ -31,7 +32,10 @@ void GameMap::LoadMap(char* name)
 					game_map_.max_y_ = i;
 				}
 				if (val == 60) game_map_.Ice_block.push_back({ i,j });
+				else if (val == 48) game_map_.Laser_block.push_back({ i,j });
+				else if (val == 90) game_map_.XO_block.push_back({ i,j });
 			}
+		
 		}
 	}
 	game_map_.max_x_ = MAX_MAP_X * TILE_SIZE;
@@ -68,6 +72,8 @@ void GameMap::DrawMap(SDL_Renderer* screen)
 {
 	time++;
 	if (time % 480 == 0) Refresh_Ice();
+	if (time % 360 == 0) Lazer();
+	if (time % 360 == 50) Lazer();
 	int x1 = 0;
 	int x2 = 0;
 
@@ -112,7 +118,16 @@ void GameMap:: Refresh_Ice()
 
 	for (auto t : game_map_.Ice_block)
 	{
-		if(game_map_.tile[t.x][t.y]<60) game_map_.tile[t.x][t.y]++;
+		if(game_map_.tile[t.first][t.second]<60) game_map_.tile[t.first][t.second]++;
 	}
 
 }
+void GameMap::Lazer()
+{
+	for (auto t : game_map_.Laser_block)
+	{
+		if (game_map_.tile[t.first][t.second] == 48) game_map_.tile[t.first][t.second] = 0;
+		else game_map_.tile[t.first][t.second] = 48;
+	}
+}
+

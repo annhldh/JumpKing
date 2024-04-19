@@ -138,6 +138,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="game_map.h" />
+    <ClInclude Include="Setting.h" />
+    <ClInclude Include="XO.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="CommonFunc.h" />
     <ClInclude Include="King.h" />
@@ -152,6 +154,7 @@
     <ClCompile Include="CommonFunc.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Setting.cpp" />
     <ClCompile Include="SFX.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Text.cpp" />

@@ -8,62 +8,80 @@
 King::King()
 {
 	
-	x_stand = 608;
+	x_stand = 640;
 	y_stand = 8800;
 	delta_x = 0;
 	delta_y = 0;
     for ( int i = 0; i < COUNT_ACTION; i++ ) Action[i] = 0;
     on_ground = false;
 	turn = RIGHT;
+	pre_turn = RIGHT;
 	jump_forces = 0;
 	frame_ = 0;
 	unframe_ = 0;
 	lost_height = 0;
 	Life = 2;
 	Timer = 0;
+	time_xo = 0;
 	key_ = 1;
-	stage_ = 1;
-
+	stage_ = 0;
+	r_range = 3* TILE_SIZE;
+	jump_effect_x.resize(30,808);
+	jump_effect_y.resize(30, 9000);
+	jump_effect_frame.resize(30, 0);
 }
 King:: ~King()
 {
 	Free();
 }
 
-void King::Control(SDL_Event events, SDL_Renderer* des)
+void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 {
-    if (events.type == SDL_KEYDOWN && on_ground==true)
-    {
-        if (events.key.keysym.sym == SDLK_UP)  if (on_ground == true && delta_y == 0 && delta_x == 0)
-        {
-            Action[JUMP] = 1;
-			Action[FACE_DOWN] = false;
-
-        }
-
-
-        if (events.key.keysym.sym == SDLK_RIGHT)
-        {
-       
-            Action[RIGHT] = 1;
-            Action[LEFT] = 0;
-			turn = RIGHT;
-			Action[FACE_DOWN] = false;
+	X = false;
+	if (events.key.keysym.sym == SDLK_x) X = true;
+	if (events.type == SDL_KEYDOWN )
+	{
 		
+		if (events.key.keysym.sym == SDLK_r)
+		{
+			x_stand == 1160;
+			y_stand = 3000;
+		}
+		if (on_ground == true)
+		{
+			if (events.key.keysym.sym == SDLK_UP)  if (on_ground == true && delta_y == 0 && delta_x == 0)
+			{
+				Action[JUMP] = 1;
+				Action[FACE_DOWN] = false;
+				turn = NONE;
 
-        }
-        else if (events.key.keysym.sym == SDLK_LEFT)
-        {
-    
-            Action[LEFT] = 1;
-            Action[RIGHT] = 0;
-			turn = LEFT;
-			Action[FACE_DOWN] = false;
+			}
+			if (events.key.keysym.sym == SDLK_RIGHT)
+			{
 
-		
-        }
+				Action[RIGHT] = 1;
+				Action[LEFT] = 0;
+				turn = RIGHT;
+				Action[FACE_DOWN] = false;
 
-    }
+
+			}
+			else if (events.key.keysym.sym == SDLK_LEFT)
+			{
+
+				Action[LEFT] = 1;
+				Action[RIGHT] = 0;
+				turn = LEFT;
+				Action[FACE_DOWN] = false;
+
+
+			}
+		}
+
+
+
+
+	}
 	else if (events.type == SDL_KEYUP)
 	{
 		switch (events.key.keysym.sym)
@@ -80,14 +98,86 @@ void King::Control(SDL_Event events, SDL_Renderer* des)
 			Action[LEFT] = 0;
 		}
 		break;
-		case SDLK_UP:if(on_ground==true)
+		case SDLK_UP:if (on_ground == true)
 		{
 			display_sound(jumping);
 			lost_height = y_stand;
 			Action[JUMP] = 0;
 		}
-		break;
+			break;
 		}
+
+	}
+	
+	if (GAME_MODE==1 && events.type == SDL_MOUSEBUTTONDOWN && energy>0)
+	{
+		turn = NONE;
+		on_ground = false;
+		int mouse_x = 0, mouse_y = 0;
+		SDL_GetMouseState(&mouse_x, &mouse_y);
+		int vec_x = mouse_x - x_pos - rect_.w / 2;
+		int vec_y = mouse_y - y_pos - rect_.h;
+
+		tale_angle =  - std::atan(1.0 * vec_x / std::max(vec_y, 1))*180/M_PI;
+	
+		if (vec_x>= 10) turn = LEFT;
+		else if( vec_x <= -10) turn = RIGHT;
+		force = std::min(sqrt((vec_x) * (vec_x) + (vec_y) * (vec_y)), 400.0);
+		if (vec_y <= 0) force = 400;
+	
+		force = std::min( 1.0*(400 - force) * (400 - force) / 160000 * 100,100.0);
+		
+		hori = std::min(abs(vec_x) / std::max(sqrt((vec_x) * (vec_x) + (vec_y) * (vec_y) ),1.0) * force/12,10.0);
+		
+		fly_force = abs(vec_y) / std::max(sqrt((vec_x) * (vec_x) + (vec_y) * (vec_y)),0.1) * force;
+
+		energy--;
+	
+
+;	}
+	else if (events.type == SDL_MOUSEBUTTONDOWN && connect_rope==true)
+	{
+			pull = true;
+
+	}
+	else if (events.type == SDL_MOUSEBUTTONUP)
+	{
+		if (pull == true )
+		{
+			pull = false;
+			connect_rope = false;
+		
+			hori = cos(1.00*r_angle/180*M_PI) * rope_forces ;
+		
+			delta_y = -rope_forces * sin(1.00*r_angle/180*M_PI);
+			rope_forces = 0;
+			if (hori > 0) turn = LEFT;
+			else turn = RIGHT;
+			hori = std::min(abs(hori), 10);
+		}
+	}
+	int m_x1, m_y1;
+
+	if (pull == true)
+	{
+		SDL_GetMouseState(&m_x1, &m_y1);
+		x_stand += m_x1 - pre_x;
+		y_stand += m_y1 - pre_y;
+		pre_pos_x += m_x1 - pre_x;
+		pre_pos_y += m_y1 - pre_y;
+		
+		rope_forces = std::min(std::max(r_length - r_range, 0), 60);
+		pre_x = m_x1;
+		pre_y = m_y1;
+		
+
+	}
+	else
+	{
+		SDL_GetMouseState(&pre_x, &pre_y);
+		pre_pos_x = x_pos;
+		pre_pos_y = y_pos;
+
 
 	}
 
@@ -101,20 +191,22 @@ void King::Control(SDL_Event events, SDL_Renderer* des)
 void King::MoveAction(Map &map)
 {
    
-    if (Action[JUMP] == 1)
+
+    if (Action[JUMP] == 1&& connect_rope==false)
     {
-			if (jump_forces >= 65) val = -1;
+			if (jump_forces >= MAX_JUMP_FORCE) val = -1;
 			else if (jump_forces <= 0) val = 1;
 			jump_forces += val;
 	
   
     }
-	else if (Action[JUMP] == 0 && jump_forces > 0)
+	else if (Action[JUMP] == 0 && jump_forces > 0 && GAME_MODE==0)
 	{
-		if (jump_forces >= 20)
+	
+		if (jump_forces >= 14)
 		{
-			delta_y -= 20;
-			jump_forces -= 20;
+			delta_y -= 14;
+			jump_forces -= 14;
 		}
 
 		else
@@ -123,33 +215,58 @@ void King::MoveAction(Map &map)
 			jump_forces = 0;
 
 		}
+
+
 		on_ground = false;
 	}
-	if (on_ground == false)
+
+	if (sqrt((x_stand - jump_effect_x[jump_effect_index]) * (x_stand - jump_effect_x[jump_effect_index]) + (y_stand - jump_effect_y[jump_effect_index]) * (y_stand - jump_effect_y[jump_effect_index])) >= 27)
 	{
-		if (turn == RIGHT)	delta_x +=8;
-		else delta_x -= 8;
+		jump_effect_index = (jump_effect_index + 1) % 30;
+		jump_effect_x[jump_effect_index] = x_stand;
+		jump_effect_y[jump_effect_index] = y_stand;
+		jump_effect_frame[jump_effect_index] = 0;
+
+	}
+	
+
+	if (on_ground == false && connect_rope==false)
+	{
+		if (turn== RIGHT)	delta_x += hori;
+		else if ( turn == LEFT) delta_x -= hori;
+	}
+	if (GAME_MODE == 1 && fly_force>0 && delta_y>=-5)
+	{
+		
+		delta_y    =- std::min(fly_force, 15);
+		fly_force -= std::min(15,fly_force);
+		
+
 	}
 	if (on_ground == true && delta_y==0 && Action[JUMP] == 0)
 	{
 		if (Action[LEFT] == 1)
 		{
-			delta_x -= 6;
+			delta_x -= 4;
 			display_sound(walking);
 
 		}
 		else if (Action[RIGHT] == 1)
 		{
-			delta_x += 6;	
+			delta_x += 4;	
 			display_sound(walking);
 
 		}
 	}
 
-		delta_y += 2;
-		if (delta_y >= 32) delta_y = 32;
+	delta_y += GRAVITY;
+	if (delta_y >= MAX_GRAVITY) delta_y = MAX_GRAVITY;
 
 
+	if (turn == RIGHT || turn == LEFT)
+	{
+			pre_turn = turn;
+	}
 
     CheckMap(map);
 	if (Action[JUMP] == true) frame_ = (jump_forces - 1) / (50 / NUMBER_OF_FRAME + 1);
@@ -161,43 +278,47 @@ void King::MoveAction(Map &map)
 		unframe_ %= 6;
 	}
 	if (frame_ >= NUMBER_OF_FRAME) frame_ = 0;
-    delta_x = 0;
+	delta_x = 0;
+
+	
  /*   delt_y = 0*/;
 }
 
 void King :: CenterEntityOnMap(GameMap& game_map)
 {
-	game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
-    if (x_stand < SCREEN_WIDTH / 2)
-    {
-        game_map.game_map_.start_x_ = 0;
-        x_pos = x_stand;
-    }
-    else if (x_stand + SCREEN_WIDTH / 2 >= game_map.game_map_.max_x_)
-    {
-        game_map.game_map_.start_x_ = game_map.game_map_.max_x_ - SCREEN_WIDTH;
-		x_pos = x_stand - game_map.game_map_.start_x_;
-    }
+	if (pull == false)
+	{
+		game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
+		if (x_stand < SCREEN_WIDTH / 2)
+		{
+			game_map.game_map_.start_x_ = 0;
+			x_pos = x_stand;
+		}
+		else if (x_stand + SCREEN_WIDTH / 2 >= game_map.game_map_.max_x_)
+		{
+			game_map.game_map_.start_x_ = game_map.game_map_.max_x_ - SCREEN_WIDTH;
+			x_pos = x_stand - game_map.game_map_.start_x_;
+		}
 
 
-	game_map.game_map_.start_y_ = y_stand - SCREEN_HEIGHT / 2;
-	
-    if (y_stand < SCREEN_HEIGHT / 2)
-    {
-        game_map.game_map_.start_y_ = 0;
-        y_pos = y_stand;
-    }
-    else if (y_stand + SCREEN_HEIGHT / 2 >= game_map.game_map_.max_y_)
-    {
-        game_map.game_map_.start_y_ = game_map.game_map_.max_y_ - SCREEN_HEIGHT;
-		y_pos = y_stand - game_map.game_map_.start_y_;
+		game_map.game_map_.start_y_ = y_stand - 2*SCREEN_HEIGHT / 3;
+
+		if (y_stand < 2*SCREEN_HEIGHT / 3)
+		{
+			game_map.game_map_.start_y_ = 0;
+			y_pos = y_stand;
+		}
+		else if (y_stand + SCREEN_HEIGHT / 3 >= game_map.game_map_.max_y_)
+		{
+			game_map.game_map_.start_y_ = game_map.game_map_.max_y_ - SCREEN_HEIGHT;
+			y_pos = y_stand - game_map.game_map_.start_y_;
+		}
 	}
 	
 }
 
 void King::CheckMap(Map& map_data)
 {
-	
 
 	int x1 = 0;
 	int x2 = 0;
@@ -229,15 +350,15 @@ void King::CheckMap(Map& map_data)
 
 	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
-		if (delta_x > 0) //main object is moving to right
+		if (delta_x >= 0) //main object is moving to right
 		{
 			int val1 = map_data.tile[y1][x2];
 			int val2 = map_data.tile[y2][x2];
 			int val3 = map_data.tile[y3][x2];
 			int val4 = map_data.tile[y4][x2];
-			
 
-			if (val1 == 4 )
+
+			if (val1 == 4)
 			{
 				map_data.tile[y1][x2] = BLANK_TILE;
 				money_++;
@@ -247,7 +368,25 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y2][x2] = 0;
 				money_++;
 			}
+			if (val1 == 48)
+			{
+				Life--;
+			}
+			else if (val2 == 48)
+			{
 
+				Life--;
+			}
+			else if (val3 == 48)
+			{
+
+				Life--;
+			}
+			else if (val4 == 48)
+			{
+
+				Life--;
+			}
 			else if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2) && map_data.IsNonCollisionBlock(val3) && map_data.IsNonCollisionBlock(val4)))
 			{
 				x_stand = (x2) * TILE_SIZE-rect_.w-8;
@@ -256,6 +395,7 @@ void King::CheckMap(Map& map_data)
 					turn = 1 - turn;
 					jump_forces /= 2.5;
 					delta_x = -delta_x / abs(delta_x) * jump_forces/2;
+					Action[CLASH] = true;
 					
 				}
 
@@ -286,6 +426,7 @@ void King::CheckMap(Map& map_data)
 					turn = 1 - turn;
 					jump_forces /= 2.5;
 					delta_x =-delta_x/ abs(delta_x) * jump_forces/2;
+					Action[CLASH] = true;
 				
 				}
 			}
@@ -320,12 +461,13 @@ void King::CheckMap(Map& map_data)
 
 	if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
 	{
-		if (delta_y > 0)
+		if (delta_y >= 0)
 		{
 			int val1 = map_data.tile[y2][x1];
 			int val2 = map_data.tile[y2][x2];
 			int val3 = map_data.tile[y2][x3];
 			int val4 = map_data.tile[y2][x4];
+
 			
 			if (val1== 4)
 			{
@@ -367,26 +509,34 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y2][x4] = 0;
 				key_++;
 			}
-			else if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2) && map_data.IsNonCollisionBlock(val3) && map_data.IsNonCollisionBlock(val4)))
+			
+			if (val1 == 49 ||val4==49|| val3==49)
+			{
+				delta_x = 9;
+				delta_y = 9;
+			}
+			if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2) && map_data.IsNonCollisionBlock(val3) && map_data.IsNonCollisionBlock(val4)))
 			{
 				y_stand = (y2)*TILE_SIZE - rect_.h;
 				delta_y = 0;
 				if (on_ground == false) display_sound(landing);
 				on_ground = true;
 				lost_height -= y_stand;
+				Action[CLASH] = false;
 				Timer++;
 				if (lost_height < -2000)
 				{
+				
 					Action[FACE_DOWN] = true;
 					Life--;
 					display_sound(fall);
-					std::cout << Life;
+			
 				}
 				lost_height = y_stand;
 				if ((val1 == 11) || (val2 == 11) || (val3 == 11) || (val4 == 11) )
 				{
-					if (turn == LEFT) delta_x = -3;
-					else delta_x = 3;
+					if (pre_turn == LEFT) delta_x = -2;
+					else delta_x = 2;
 				}
 				if (val1 > 56 && val1<=60)
 				{
@@ -417,16 +567,21 @@ void King::CheckMap(Map& map_data)
 
 				Timer %= 60;
 
+				energy = 3;
 
 			}
 		}
 
-		else if (delta_y < 0)
+		else if (delta_y <= 0)
 		{
 			int val1 = map_data.tile[y1][x2];
 			int val2 = map_data.tile[y1][x1];
 			int val3 = map_data.tile[y1][x3];
 			int val4 = map_data.tile[y1][x4];
+			if (val1 == 48 || val2==48||val3==48 ||val4==48)
+			{
+				Life--;
+			}
 
 			if (val1 == 4)
 			{
@@ -436,16 +591,6 @@ void King::CheckMap(Map& map_data)
 			if (val2 == 4)
 			{
 				map_data.tile[y1][x1] = 0;
-				money_++;
-			}
-			if (val3 == 4)
-			{
-				map_data.tile[y1][x3] = 0;
-				money_++;
-			}
-			if (val4 == 4)
-			{
-				map_data.tile[y1][x4] = 0;
 				money_++;
 			}
 			if (val1 == 25)
@@ -477,14 +622,93 @@ void King::CheckMap(Map& map_data)
 			}
 		}
 	}
-	x_stand += delta_x;
-	y_stand += delta_y;
+
+
+
 	Get_max_height();
-	if (map_data.tile[y1][x1] >= 26 && map_data.tile[y1][x1] <= 45 && key_ > 0)
+	int val1 = map_data.tile[y1][x1];
+	int val2 = map_data.tile[y1][x2];
+	int val3 = map_data.tile[y2][x1];
+	int val4 = map_data.tile[y2][x2];
+	if (val1 == 90 && X == true && map_data.x_cnt == map_data.o_cnt && (loop - time_xo) >= 60)
 	{
-		stage_ ++;
+		map_data.tile[y1][x1] = 91;
+		map_data.x_cnt++;
+		map_data.Update_xo(1);
+		time_xo = loop;
+
+		if (map_data.x_cnt - map_data.o_cnt == 1)
+		{
+			map_data.xo_rival();
+			map_data.Update_xo(0);
+			map_data.o_cnt++;
+		}
+		if (map_data.Check_xo() == 1)std::cout << "X WIN";
+		else if (map_data.Check_xo() == 0)std::cout << "O WIN";
+
 
 	}
+	if ((val1 >= 26 && val1 <= 45) && (val2 >= 26 && val2 <= 45))
+	{
+		stage_++;
+	}
+	else if (val1 == 85) stage_ = 1;
+	else if (val1 == 86) stage_ = 2;
+	else if (val1 == 87)
+	{
+		stage_ = 1;
+		GAME_MODE = 1;
+		GRAVITY = 1;
+		MAX_GRAVITY = 16;
+	
+	}
+	else if (val1 == 88)
+	{
+		stage_ = 3;
+	
+	}
+
+	if (check_rope(map_data) == false) bounderies = 45;
+	else if (connect_rope==false && check_rope(map_data) == true)connect_rope = true;
+	else if (y_stand < rope_stand_y1 && pull == false)
+	{
+		connect_rope = false;
+	}
+	if (connect_rope == true && pull==false )
+	{
+		if (bounderies > 12)
+
+		{
+			bounderies -= 0.1;
+			std::cout << -6.0 * (1 - (abs(1.0 * rope_stand_x1 - x_stand) / 50)) - 1 <<'\n';
+
+			if (rope_stand_x1 - x_stand >= bounderies)
+			{
+				turn = RIGHT;
+			}
+			else if (rope_stand_x1 - x_stand <= -bounderies)
+			{
+				turn = LEFT;
+			}
+
+
+			if (turn == LEFT) delta_x = round(-6.0 * bounderies * bounderies / 64 / 64 * (1 - (abs(1.0 * rope_stand_x1 - x_stand) / 64))) - 1;
+			else delta_x = round(6.0 * bounderies * bounderies / 64 / 64 * (1 - (abs(1.0 * rope_stand_x1 - x_stand) / 64))) + 1;
+		}
+
+		else bounderies = 0;
+		delta_y = 0;
+		y_stand = rope_stand_y1 - rect_.h / 2 + sqrt(std::max(r_range * r_range - (rope_stand_x1 - x_stand) * (rope_stand_x1 - x_stand), 0));
+	}
+	if (pull == true)
+	{
+		delta_x = 0;
+		delta_y = 0;	
+	}
+
+
+	x_stand += delta_x;
+	y_stand += delta_y;
 
 
 
@@ -502,8 +726,10 @@ void King::set_clips()
 }
 void King::Show_frame(SDL_Renderer* des)
 {
+
 	if (Action[FACE_DOWN] == true)
 	{
+
 		if (turn == LEFT)
 		{
 			mTexture = KingImg[FACE_DOWN_LEFT].mTexture;
@@ -518,45 +744,79 @@ void King::Show_frame(SDL_Renderer* des)
 	}
 	else if (Action[JUMP] == true)
 	{
-		if (turn == LEFT)
+		if (pre_turn == LEFT)
 		{
 			mTexture = KingImg[PRESS_LEFT].mTexture;
 			rect_ = KingImg[PRESS_LEFT].rect_;
 		}
 
-		else
+		else /*(turn == RIGHT)*/
 		{
 			mTexture = KingImg[PRESS_RIGHT].mTexture;
 			rect_ = KingImg[PRESS_RIGHT].rect_;
 		}
+
 	}
 	else if (on_ground == false && delta_y<=0)
 	{
-
-		if (turn == LEFT)
+		if (Action[CLASH] == true)
 		{
-			mTexture = KingImg[JUMP_LEFT].mTexture;
-			rect_ = KingImg[JUMP_LEFT].rect_;
-		}
+			if (turn == LEFT)
+			{
+				mTexture = KingImg[CLASH_LEFT].mTexture;
+				rect_ = KingImg[CLASH_LEFT].rect_;
+			}
 
+			else
+			{
+				mTexture = KingImg[CLASH_RIGHT].mTexture;
+				rect_ = KingImg[CLASH_RIGHT].rect_;
+			}
+		}
 		else
 		{
-			mTexture = KingImg[JUMP_RIGHT].mTexture;
-			rect_ = KingImg[JUMP_RIGHT].rect_;
+			if (pre_turn == LEFT)
+			{
+				mTexture = KingImg[JUMP_LEFT].mTexture;
+				rect_ = KingImg[JUMP_LEFT].rect_;
+			}
+
+			else
+			{
+				mTexture = KingImg[JUMP_RIGHT].mTexture;
+				rect_ = KingImg[JUMP_RIGHT].rect_;
+			}
 		}
 	}
 	else if (on_ground == false && delta_y > 0)
 	{
-		if (turn == LEFT)
+		if (Action[CLASH] == true)
 		{
-			mTexture = KingImg[FALL_LEFT].mTexture;
-			rect_ = KingImg[FALL_LEFT].rect_;
-		}
+			if (turn == LEFT)
+			{
+				mTexture = KingImg[CLASH_LEFT].mTexture;
+				rect_ = KingImg[CLASH_LEFT].rect_;
+			}
 
+			else
+			{
+				mTexture = KingImg[CLASH_RIGHT].mTexture;
+				rect_ = KingImg[CLASH_RIGHT].rect_;
+			}
+		}
 		else
 		{
-			mTexture = KingImg[FALL_RIGHT].mTexture;
-			rect_ = KingImg[FALL_RIGHT].rect_;
+			if (pre_turn == LEFT)
+			{
+				mTexture = KingImg[FALL_LEFT].mTexture;
+				rect_ = KingImg[FALL_LEFT].rect_;
+			}
+
+			else
+			{
+				mTexture = KingImg[FALL_RIGHT].mTexture;
+				rect_ = KingImg[FALL_RIGHT].rect_;
+			}
 		}
 	}
 	
@@ -577,7 +837,7 @@ void King::Show_frame(SDL_Renderer* des)
 	}
 	else 
 	{
-		if (turn == LEFT)
+		if (pre_turn == LEFT)
 		{
 			mTexture = KingImg[STAND_LEFT].mTexture;
 			rect_ = KingImg[STAND_LEFT].rect_;
@@ -588,12 +848,25 @@ void King::Show_frame(SDL_Renderer* des)
 			rect_ = KingImg[STAND_RIGHT].rect_;
 		}
 		
-	
 	}
 
 	set_clips();
 	rect_.w /= NUMBER_OF_FRAME;
-	Render(x_pos, y_pos, des, &frame_clip_[frame_]);
+	if (GAME_MODE == 1)
+	{
+		double zoomtale = (1.0 * fly_force/ 70);
+		KingTale.rect_ = { 0,0,int(zoomtale * 50) ,int(zoomtale * 62) }; 
+		KingTale.Render(x_pos + rect_.w / 2 -KingTale.rect_.w/2 , y_pos + rect_.h, des, NULL, tale_angle, &tale);
+	}
+	if (pull == true)
+	{
+		Render(pre_pos_x, pre_pos_y, des, &frame_clip_[frame_]);
+	}
+	else Render(x_pos, y_pos, des, &frame_clip_[frame_]);
+
+
+
+
 }
 
 
@@ -605,15 +878,15 @@ void King::set_begin()
 	Action[3] = false;
 
 	x_stand = 808;
-	y_stand = 8800;
+	y_stand = 9000;
 	delta_x = 0;
 	delta_y = 0;
 	lost_height = 2000;
 	jump_forces = 0;
 	on_ground = true;
 	turn = 0;
-	stage_ = 1;
 	max_height = 0;
+	key_ = 0;
 
 }
 
@@ -631,8 +904,22 @@ void King::loadKingImg(SDL_Renderer *des)
 	KingImg[PRESS_RIGHT].LoadImg("img//King//king_press_right.png", des);
 	KingImg[FACE_DOWN_LEFT].LoadImg("img//King//face_down_left.png", des);
 	KingImg[FACE_DOWN_RIGHT].LoadImg("img//King//face_down_right.png", des);
+	KingImg[CLASH_LEFT].LoadImg("img//King//king_clash_left.png", des);
+	KingImg[CLASH_RIGHT].LoadImg("img//King//king_clash_right.png", des);
 
+	KingTale.LoadImg("img//King//king_tale.png", des);
+	char nam[] = "img//button//jump_effect_2.png";
+	for (int color = 0; color < COLOR_COUNT; color++)
+	{
+		nam[25] = color + '0';
+		for (int i = 0; i < 25; i++)
+		{
 
+			jump_tale[i][color].LoadImg(nam, des);
+			jump_tale[i][color].rect_.w = 48 - 2 * i;
+			jump_tale[i][color].rect_.h = 48 - 2 * i;
+		}
+	}
 	
 }
 
@@ -644,10 +931,81 @@ void King::Get_max_height()
 void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &back_ground_)
 {
 	set_begin();
-	char nameMap2[] = "map//map02.dat";
+	stage_ = stage;
+	char nameMap2[] = "map//map03.dat";
 	nameMap2[9] = char(stage+'0');
 	display_music_theme(music_theme[stage]);
 	back_ground_.LoadImg("img//background" + std::to_string(stage) + ".png", des);
+	hori = 8;
+	game_map.time =0;
 	game_map.LoadMap(nameMap2);
 
+}
+void King::Reborn(int stage,SDL_Renderer* des,Object lose_)
+{
+	lose_.Render(0, 0, des, NULL);
+	SDL_RenderPresent(des);
+	display_rick(music_rick);
+	Life = 1;
+	display_music_theme(music_theme[stage]);
+}
+bool King::check_rope(Map& map)
+{
+	energy = delta_x * delta_x + delta_y * delta_y;
+	if (delta_y < -30) return 0;
+	int point_x = x_stand + rect_.w/2;
+	int point_y = y_stand + rect_.h/2;
+	int tile_x = point_x / TILE_SIZE;
+	int tile_y = point_y / TILE_SIZE;
+
+	for (int i = -3; i <= 2; i++)
+	{
+		for (int j = -2; j <= 2; j++)
+		{
+			if (map.tile[tile_y + i][tile_x + j] == 93) 
+			{
+				connect_rope = true;
+				rope_stand_x1=(tile_x+j)*TILE_SIZE-7;
+				rope_stand_y1=(tile_y+i+0.5)*TILE_SIZE;
+				rope_stand_x2= (tile_x + j+1) * TILE_SIZE;
+				rope_stand_y2 = rope_stand_y1;
+
+				return 1;
+
+			}
+		}
+	}
+	return 0;
+
+	
+}
+
+void King::render_rope(SDL_Renderer* des, Map& map)
+{
+
+	
+	r_length = std::sqrt((rope_stand_x1 - x_stand) * (rope_stand_x1 - x_stand) + (rope_stand_y1 - y_stand - rect_.h / 2) * (rope_stand_y1 - y_stand - rect_.h / 2));
+	if ((rope_stand_x1 - x_stand) == 0) r_angle = 90;
+	else
+	{
+		r_angle = std::atan(1.0 * (y_stand + rect_.h / 2 - rope_stand_y1) / (x_stand - rope_stand_x1)) / M_PI * 180;
+		if (r_angle < 0) r_angle = 180 + r_angle;
+	}
+
+	SDL_Point p = { 0,7 };
+	rope.rect_.w = r_length;
+
+	rope.Render(rope_stand_x1 - map.start_x_, rope_stand_y1 - map.start_y_, des, NULL, r_angle, &p);
+	rope.Render(rope_stand_x2 - map.start_x_, rope_stand_y2 - map.start_y_, des, NULL, r_angle, &p);
+}
+
+void King::Jump_effect(SDL_Renderer* des, Map& map)
+{
+
+	for (int i = 0; i < 30; i++)
+	{
+
+		if(jump_effect_frame[i] <24) jump_effect_frame[i]++;
+		jump_tale[jump_effect_frame[i]][king_tale_color].Render(jump_effect_x[i] - map.start_x_ + rect_.w / 2 - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.w / 2, jump_effect_y[i] - map.start_y_ + rect_.h / 2 - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.h / 2, des, NULL);
+	}
 }

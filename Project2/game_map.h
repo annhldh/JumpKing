@@ -23,9 +23,11 @@ public:
 	void LoadTiles(SDL_Renderer* screen);
 	void DrawMap(SDL_Renderer* screen);
 	void Refresh_Ice();
+	void Lazer();
 	Map game_map_;
 	TileMat tile_mat[MAX_TILES] = {};
 	Uint32 time=0;
+
 
 
 };

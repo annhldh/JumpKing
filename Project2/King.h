@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "game_map.h"
 #include "SFX.h"
+#include "Setting.h"
 class King: public Object
 {
 public:
@@ -13,8 +14,10 @@ public:
 	{
 		RIGHT,
 		LEFT,
+		NONE,
 		JUMP,
 		FACE_DOWN,
+		CLASH,
 		COUNT_ACTION,
 	};
 	
@@ -32,19 +35,22 @@ public:
 		FACE_DOWN_RIGHT,
 		PRESS_LEFT,
 		PRESS_RIGHT,
+		CLASH_LEFT,
+		CLASH_RIGHT,
 		COUNT,
 	};
 
 	Object KingImg[COUNT];
+	Object KingTale;
 	// nhan lenh dieu khien
-	void Control(SDL_Event events, SDL_Renderer* des);
+	void Control(SDL_Event events, SDL_Renderer* des,Map & map);
 	//di chuyen theo lenh dieu khien
 	void MoveAction(Map& map);
 	void set_clips();
 	void CenterEntityOnMap(GameMap & game_map);
 	void CheckMap(Map& map);
 	void Show_frame(SDL_Renderer* des);
-	void Jump_bar(SDL_Renderer* des, Object jump_bar);
+	
 	void set_begin();
 
 
@@ -59,11 +65,14 @@ public:
 
 	//
 	int x_pos = SCREEN_WIDTH/2 ;
-	int y_pos = SCREEN_HEIGHT/2 ;
+	int y_pos = 2*SCREEN_HEIGHT/3 ;
 	bool Action[COUNT_ACTION] = {};
 	SDL_Rect frame_clip_[8] ;
+	SDL_Point tale = { 25,0 };
+	
 
 	int turn;
+	int pre_turn;
 	bool on_ground;
 	int jump_forces;
 	int val = 0;
@@ -75,12 +84,60 @@ public:
 	int money_ = 0;
 	int key_ = 0;
 	int Timer;
+	int time_xo = 0;
 	int stage_;
+
+
+	bool X = false;
+
+	//MODE 2
+	double tale_angle=20;
+	double force = 0;
+	int hori = 8;
+	int energy = 3;
+	int fly_force=0;
+
+	bool connect_rope = false;
+	bool pull = false;
+
+
 
 	
 	void loadKingImg(SDL_Renderer * des);
 	void Get_max_height();
 	void loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object& back_ground_);
+	void Reborn(int stage,SDL_Renderer* des, Object lose_);
+	bool check_rope(Map& map);
+	void render_rope(SDL_Renderer* des, Map& map);
+
+
+
+	int rope_stand_x1;
+	int rope_stand_y1;
+	int rope_stand_x2;
+	int rope_stand_y2;
+
+	int r_angle = 0;
+	int r_length;
+
+	int r_range;
+	int pre_x = 0;
+	int pre_y = 0;
+	int pre_pos_x = 0;
+	int pre_pos_y = 0;
+	int rope_forces = 0;
+	int kinetic_e = 0;
+
+	double bounderies = 45;
+
+	Object jump_tale[25][COLOR_COUNT];
+	std::vector<int> jump_effect_x;
+
+	std::vector<int> jump_effect_y;
+	std::vector<int> jump_effect_frame;
+	int jump_effect_index=0;
+	void Jump_effect(SDL_Renderer* des, Map& map);
+
 
 };
 
