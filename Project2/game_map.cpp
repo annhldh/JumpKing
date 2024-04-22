@@ -54,17 +54,21 @@ void GameMap::LoadTiles(SDL_Renderer* screen)
 	char file_img[30];
 	FILE* fp = NULL;
 
-	for (int i = 0; i < MAX_TILES; i++)
+	for (int map_style = 0; map_style < 2; map_style++)
 	{
-		sprintf_s(file_img, "map/%d.png", i);
-		fopen_s(&fp, file_img, "rb");
-
-		if (fp == NULL)
+		for (int i = 0; i < MAX_TILES; i++)
 		{
-			continue;
+			sprintf_s(file_img, "map/%d/%d.png",map_style,i);
+	
+			fopen_s(&fp, file_img, "rb");
+
+			if (fp == NULL)
+			{
+				continue;
+			}
+			fclose(fp);
+			tile_mat[i][map_style].LoadImg(file_img, screen);
 		}
-		fclose(fp);
-		tile_mat[i].LoadImg(file_img, screen);
 	}
 }
 
@@ -101,10 +105,10 @@ void GameMap::DrawMap(SDL_Renderer* screen)
 			int val = game_map_.tile[map_y][map_x];
 			if (val > 0)
 			{
-				tile_mat[val].rect_.x = j;
-				tile_mat[val].rect_.y = i;
+				tile_mat[val][tile_style_].rect_.x = j;
+				tile_mat[val][tile_style_].rect_.y = i;
 
-				tile_mat[val].Render(j,i,screen, NULL);
+				tile_mat[val][tile_style_].Render(j, i, screen, NULL);
 			}
 			map_x++;
 

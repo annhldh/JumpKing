@@ -29,6 +29,8 @@ King::King()
 	jump_effect_x.resize(30,808);
 	jump_effect_y.resize(30, 9000);
 	jump_effect_frame.resize(30, 0);
+	King_hat = 0;
+	
 }
 King:: ~King()
 {
@@ -113,8 +115,7 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 	{
 		turn = NONE;
 		on_ground = false;
-		int mouse_x = 0, mouse_y = 0;
-		SDL_GetMouseState(&mouse_x, &mouse_y);
+
 		int vec_x = mouse_x - x_pos - rect_.w / 2;
 		int vec_y = mouse_y - y_pos - rect_.h;
 
@@ -132,7 +133,6 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 		fly_force = abs(vec_y) / std::max(sqrt((vec_x) * (vec_x) + (vec_y) * (vec_y)),0.1) * force;
 
 		energy--;
-	
 
 ;	}
 	else if (events.type == SDL_MOUSEBUTTONDOWN && connect_rope==true)
@@ -153,20 +153,41 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 			rope_forces = 0;
 			if (hori > 0) turn = LEFT;
 			else turn = RIGHT;
-			hori = std::min(abs(hori), 10);
+			hori = abs(hori)*0.7;
 		}
 	}
 	int m_x1, m_y1;
-
+	double anglefake = 0;
+	
 	if (pull == true)
 	{
 		SDL_GetMouseState(&m_x1, &m_y1);
-		x_stand += m_x1 - pre_x;
-		y_stand += m_y1 - pre_y;
-		pre_pos_x += m_x1 - pre_x;
-		pre_pos_y += m_y1 - pre_y;
-		
-		rope_forces = std::min(std::max(r_length - r_range, 0), 60);
+		if (r_length <= r_range + 40)
+		{
+
+			x_stand += m_x1 - pre_x;
+			y_stand += m_y1 - pre_y;
+			pre_pos_x += m_x1 - pre_x;
+			pre_pos_y += m_y1 - pre_y;
+
+			rope_forces = std::min(std::max(r_length - r_range, 0), 60);
+		}
+		else
+		{
+			if ((rope_stand_x1 -m_x1) == 0) anglefake = 90;
+			else
+			{
+				anglefake = std::atan(1.0 * (m_y1 - rope_stand_y1 + map.start_y_) / (m_x1 - rope_stand_x1 + map.start_x_));
+				if (anglefake < 0) anglefake = M_PI + anglefake;
+			}
+	
+			x_stand = rope_stand_x1 + (r_range + 40) * cos(anglefake )*0.9;
+			y_stand = rope_stand_y1 + (r_range + 40) * sin(anglefake )*0.9;
+			pre_pos_x = x_stand - map.start_x_;
+			pre_pos_y = y_stand - map.start_y_;
+			rope_forces = std::min(std::max(r_length - r_range, 0), 60);
+
+		}
 		pre_x = m_x1;
 		pre_y = m_y1;
 		
@@ -200,7 +221,7 @@ void King::MoveAction(Map &map)
 	
   
     }
-	else if (Action[JUMP] == 0 && jump_forces > 0 && GAME_MODE==0)
+	else if (Action[JUMP] == 0 && jump_forces > 0 && GAME_MODE !=1)
 	{
 	
 		if (jump_forces >= 14)
@@ -220,7 +241,7 @@ void King::MoveAction(Map &map)
 		on_ground = false;
 	}
 
-	if (sqrt((x_stand - jump_effect_x[jump_effect_index]) * (x_stand - jump_effect_x[jump_effect_index]) + (y_stand - jump_effect_y[jump_effect_index]) * (y_stand - jump_effect_y[jump_effect_index])) >= 27)
+	if (sqrt((x_stand - jump_effect_x[jump_effect_index]) * (x_stand - jump_effect_x[jump_effect_index]) + (y_stand - jump_effect_y[jump_effect_index]) * (y_stand - jump_effect_y[jump_effect_index])) >= footprint_distance)
 	{
 		jump_effect_index = (jump_effect_index + 1) % 30;
 		jump_effect_x[jump_effect_index] = x_stand;
@@ -286,7 +307,8 @@ void King::MoveAction(Map &map)
 
 void King :: CenterEntityOnMap(GameMap& game_map)
 {
-	if (pull == false)
+
+	if(true)
 	{
 		game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
 		if (x_stand < SCREEN_WIDTH / 2)
@@ -301,9 +323,9 @@ void King :: CenterEntityOnMap(GameMap& game_map)
 		}
 
 
-		game_map.game_map_.start_y_ = y_stand - 2*SCREEN_HEIGHT / 3;
-
-		if (y_stand < 2*SCREEN_HEIGHT / 3)
+			game_map.game_map_.start_y_ = y_stand - 2 * SCREEN_HEIGHT / 3;
+		
+		if (y_stand < 2 * SCREEN_HEIGHT / 3)
 		{
 			game_map.game_map_.start_y_ = 0;
 			y_pos = y_stand;
@@ -314,7 +336,33 @@ void King :: CenterEntityOnMap(GameMap& game_map)
 			y_pos = y_stand - game_map.game_map_.start_y_;
 		}
 	}
+	else if (pull == false && GAME_MODE == 2)
+	{
+		game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
+		if (x_stand < SCREEN_WIDTH / 2)
+		{
+			game_map.game_map_.start_x_ = 0;
+			x_pos = x_stand;
+		}
+		else if (x_stand + SCREEN_WIDTH / 2 >= game_map.game_map_.max_x_)
+		{
+			game_map.game_map_.start_x_ = game_map.game_map_.max_x_ - SCREEN_WIDTH;
+			x_pos = x_stand - game_map.game_map_.start_x_;
+		}
+		if (y_stand - 2 * SCREEN_HEIGHT / 3 <= game_map.game_map_.start_y_)
+		{
+			game_map.game_map_.start_y_ = y_stand - 2 * SCREEN_HEIGHT / 3;
+		}
+		/*else if (y_stand > game_map.game_map_.start_y_) Life--;*/
+	}
 	
+	
+}
+
+void King:: check_collect(Map& map_data, int val1, int val2, int val3, int val4)
+{
+
+
 }
 
 void King::CheckMap(Map& map_data)
@@ -357,7 +405,34 @@ void King::CheckMap(Map& map_data)
 			int val3 = map_data.tile[y3][x2];
 			int val4 = map_data.tile[y4][x2];
 
-
+			if (val1 == 12 && key_>0)
+			{
+				map_data.tile[y1][x2] = 13;
+			}
+			else if (val2 == 12 && key_>0)
+			{
+				map_data.tile[y2][x2] = 13;
+			}
+			if (val1 == 25)
+			{
+				map_data.tile[y1][x2] = BLANK_TILE;
+				key_++;
+			}
+			else if (val2 == 25)
+			{
+				map_data.tile[y2][x2] = 0;
+				key_++;
+			}
+			else if (val3 == 25)
+			{
+				map_data.tile[y3][x2] = 0;
+				key_++;
+			}
+			else if (val4 == 25)
+			{
+				map_data.tile[y4][x2] = 0;
+				key_++;
+			}
 			if (val1 == 4)
 			{
 				map_data.tile[y1][x2] = BLANK_TILE;
@@ -368,23 +443,8 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y2][x2] = 0;
 				money_++;
 			}
-			if (val1 == 48)
+			if (val1 == 48 && val2==48 && val3 == 48 && val4==48)
 			{
-				Life--;
-			}
-			else if (val2 == 48)
-			{
-
-				Life--;
-			}
-			else if (val3 == 48)
-			{
-
-				Life--;
-			}
-			else if (val4 == 48)
-			{
-
 				Life--;
 			}
 			else if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2) && map_data.IsNonCollisionBlock(val3) && map_data.IsNonCollisionBlock(val4)))
@@ -408,12 +468,40 @@ void King::CheckMap(Map& map_data)
 			int val3 = map_data.tile[y3][x1];
 			int val4 = map_data.tile[y4][x1];
 
-			if (map_data.tile[y1][x1] == 4)
+			if (val1 == 12 && key_>0)
+			{
+				map_data.tile[y1][x1] = 13;
+			}
+			else if (val2 == 12 && key_>0)
+			{
+				map_data.tile[y2][x1] = 13;
+			}
+			if (val1 == 25)
+			{
+				map_data.tile[y1][x1] = BLANK_TILE;
+				key_++;
+			}
+			else if (val2 == 25)
+			{
+				map_data.tile[y2][x1] = 0;
+				key_++;
+			}
+			else if (val3 == 25)
+			{
+				map_data.tile[y3][x1] = 0;
+				key_++;
+			}
+			else if (val4 == 25)
+			{
+				map_data.tile[y4][x1] = 0;
+				key_++;
+			}
+			if (val1 == 4)
 			{
 				map_data.tile[y1][x1] = BLANK_TILE;
 				money_++;
 			}
-			 if (map_data.tile[y2][x1] == 4)
+			if (val2 == 4)
 			{
 				map_data.tile[y2][x1] = 0;
 				money_++;
@@ -494,17 +582,17 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y2][x1] = BLANK_TILE;
 				key_++;
 			}
-			if (val2 == 25)
+			else if (val2 == 25)
 			{
 				map_data.tile[y2][x2] = 0;
 				key_++;
 			}
-			if (val3 == 25)
+			else if (val3 == 25)
 			{
 				map_data.tile[y2][x3] = 0;
 				key_++;
 			}
-			if (val4 == 25)
+			else if (val4 == 25)
 			{
 				map_data.tile[y2][x4] = 0;
 				key_++;
@@ -560,10 +648,7 @@ void King::CheckMap(Map& map_data)
 					display_sound(icebreaking);
 					map_data.tile[y2][x4] -= Timer / 60;
 				}
-				//if (val1 <= 56 && val1>53) map_data.tile[y2][x1] = 0;
-				//if (val2 <= 56 && val2>53) map_data.tile[y2][x2] = 0;
-				//if (val3 <= 56 && val3>53) map_data.tile[y2][x3] = 0;
-				//if (val4 <= 56 && val4>53) map_data.tile[y2][x4] = 0;
+				
 
 				Timer %= 60;
 
@@ -625,46 +710,61 @@ void King::CheckMap(Map& map_data)
 
 
 
-	Get_max_height();
+	Get_max_height(); 
+	if(King_hat==1) y1 += 1;
 	int val1 = map_data.tile[y1][x1];
 	int val2 = map_data.tile[y1][x2];
 	int val3 = map_data.tile[y2][x1];
 	int val4 = map_data.tile[y2][x2];
-	if (val1 == 90 && X == true && map_data.x_cnt == map_data.o_cnt && (loop - time_xo) >= 60)
-	{
-		map_data.tile[y1][x1] = 91;
-		map_data.x_cnt++;
-		map_data.Update_xo(1);
-		time_xo = loop;
+	//if (val1 == 90 && X == true && map_data.x_cnt == map_data.o_cnt && (loop - time_xo) >= 60)
+	//{
+	//	map_data.tile[y1][x1] = 91;
+	//	map_data.x_cnt++;
+	//	map_data.Update_xo(1);
+	//	time_xo = loop;
 
-		if (map_data.x_cnt - map_data.o_cnt == 1)
-		{
-			map_data.xo_rival();
-			map_data.Update_xo(0);
-			map_data.o_cnt++;
-		}
-		if (map_data.Check_xo() == 1)std::cout << "X WIN";
-		else if (map_data.Check_xo() == 0)std::cout << "O WIN";
+	//	if (map_data.x_cnt - map_data.o_cnt == 1)
+	//	{
+	//		map_data.xo_rival();
+	//		map_data.Update_xo(0);
+	//		map_data.o_cnt++;
+	//	}
+	//	if (map_data.Check_xo() == 1)std::cout << "X WIN";
+	//	else if (map_data.Check_xo() == 0)std::cout << "O WIN";
 
 
-	}
+	//}
+
 	if ((val1 >= 26 && val1 <= 45) && (val2 >= 26 && val2 <= 45))
 	{
 		stage_++;
+		key_ = 0;
+		display_sound(door_open);
 	}
-	else if (val1 == 85) stage_ = 1;
-	else if (val1 == 86) stage_ = 2;
+
+	else if (val1 == 85)
+	{
+		stage_ = 1;
+		display_sound(door_open);
+	}
+	else if (val1 == 86)
+	{
+		OnShop_ = true;
+		display_sound(door_open);
+	}
 	else if (val1 == 87)
 	{
 		stage_ = 1;
 		GAME_MODE = 1;
 		GRAVITY = 1;
 		MAX_GRAVITY = 16;
+		display_sound(door_open);
 	
 	}
 	else if (val1 == 88)
 	{
 		stage_ = 3;
+		display_sound(door_open);
 	
 	}
 
@@ -680,8 +780,7 @@ void King::CheckMap(Map& map_data)
 
 		{
 			bounderies -= 0.1;
-			std::cout << -6.0 * (1 - (abs(1.0 * rope_stand_x1 - x_stand) / 50)) - 1 <<'\n';
-
+	
 			if (rope_stand_x1 - x_stand >= bounderies)
 			{
 				turn = RIGHT;
@@ -732,28 +831,28 @@ void King::Show_frame(SDL_Renderer* des)
 
 		if (turn == LEFT)
 		{
-			mTexture = KingImg[FACE_DOWN_LEFT].mTexture;
-			rect_ = KingImg[FACE_DOWN_LEFT].rect_;
+			mTexture = KingImg[FACE_DOWN_LEFT][King_hat].mTexture;
+			rect_ = KingImg[FACE_DOWN_LEFT][King_hat].rect_;
 		}
 		
 		else
 		{
-			mTexture = KingImg[FACE_DOWN_RIGHT].mTexture;
-			rect_ = KingImg[FACE_DOWN_RIGHT].rect_;
+			mTexture = KingImg[FACE_DOWN_RIGHT][King_hat].mTexture;
+			rect_ = KingImg[FACE_DOWN_RIGHT][King_hat].rect_;
 		}
 	}
 	else if (Action[JUMP] == true)
 	{
 		if (pre_turn == LEFT)
 		{
-			mTexture = KingImg[PRESS_LEFT].mTexture;
-			rect_ = KingImg[PRESS_LEFT].rect_;
+			mTexture = KingImg[PRESS_LEFT][King_hat].mTexture;
+			rect_ = KingImg[PRESS_LEFT][King_hat].rect_;
 		}
 
 		else /*(turn == RIGHT)*/
 		{
-			mTexture = KingImg[PRESS_RIGHT].mTexture;
-			rect_ = KingImg[PRESS_RIGHT].rect_;
+			mTexture = KingImg[PRESS_RIGHT][King_hat].mTexture;
+			rect_ = KingImg[PRESS_RIGHT][King_hat].rect_;
 		}
 
 	}
@@ -763,28 +862,28 @@ void King::Show_frame(SDL_Renderer* des)
 		{
 			if (turn == LEFT)
 			{
-				mTexture = KingImg[CLASH_LEFT].mTexture;
-				rect_ = KingImg[CLASH_LEFT].rect_;
+				mTexture = KingImg[CLASH_LEFT][King_hat].mTexture;
+				rect_ = KingImg[CLASH_LEFT][King_hat].rect_;
 			}
 
 			else
 			{
-				mTexture = KingImg[CLASH_RIGHT].mTexture;
-				rect_ = KingImg[CLASH_RIGHT].rect_;
+				mTexture = KingImg[CLASH_RIGHT][King_hat].mTexture;
+				rect_ = KingImg[CLASH_RIGHT][King_hat].rect_;
 			}
 		}
 		else
 		{
 			if (pre_turn == LEFT)
 			{
-				mTexture = KingImg[JUMP_LEFT].mTexture;
-				rect_ = KingImg[JUMP_LEFT].rect_;
+				mTexture = KingImg[JUMP_LEFT][King_hat].mTexture;
+				rect_ = KingImg[JUMP_LEFT][King_hat].rect_;
 			}
 
 			else
 			{
-				mTexture = KingImg[JUMP_RIGHT].mTexture;
-				rect_ = KingImg[JUMP_RIGHT].rect_;
+				mTexture = KingImg[JUMP_RIGHT][King_hat].mTexture;
+				rect_ = KingImg[JUMP_RIGHT][King_hat].rect_;
 			}
 		}
 	}
@@ -794,28 +893,28 @@ void King::Show_frame(SDL_Renderer* des)
 		{
 			if (turn == LEFT)
 			{
-				mTexture = KingImg[CLASH_LEFT].mTexture;
-				rect_ = KingImg[CLASH_LEFT].rect_;
+				mTexture = KingImg[CLASH_LEFT][King_hat].mTexture;
+				rect_ = KingImg[CLASH_LEFT][King_hat].rect_;
 			}
 
 			else
 			{
-				mTexture = KingImg[CLASH_RIGHT].mTexture;
-				rect_ = KingImg[CLASH_RIGHT].rect_;
+				mTexture = KingImg[CLASH_RIGHT][King_hat].mTexture;
+				rect_ = KingImg[CLASH_RIGHT][King_hat].rect_;
 			}
 		}
 		else
 		{
 			if (pre_turn == LEFT)
 			{
-				mTexture = KingImg[FALL_LEFT].mTexture;
-				rect_ = KingImg[FALL_LEFT].rect_;
+				mTexture = KingImg[FALL_LEFT][King_hat].mTexture;
+				rect_ = KingImg[FALL_LEFT][King_hat].rect_;
 			}
 
 			else
 			{
-				mTexture = KingImg[FALL_RIGHT].mTexture;
-				rect_ = KingImg[FALL_RIGHT].rect_;
+				mTexture = KingImg[FALL_RIGHT][King_hat].mTexture;
+				rect_ = KingImg[FALL_RIGHT][King_hat].rect_;
 			}
 		}
 	}
@@ -824,14 +923,14 @@ void King::Show_frame(SDL_Renderer* des)
 	{
 		if (turn == LEFT)
 		{
-			mTexture = KingImg[RUN_LEFT].mTexture;
-			rect_ = KingImg[RUN_LEFT].rect_;
+			mTexture = KingImg[RUN_LEFT][King_hat].mTexture;
+			rect_ = KingImg[RUN_LEFT][King_hat].rect_;
 		}
 
 		else
 		{
-			mTexture = KingImg[RUN_RIGHT].mTexture;
-			rect_ = KingImg[RUN_RIGHT].rect_;
+			mTexture = KingImg[RUN_RIGHT][King_hat].mTexture;
+			rect_ = KingImg[RUN_RIGHT][King_hat].rect_;
 		}
 
 	}
@@ -839,13 +938,13 @@ void King::Show_frame(SDL_Renderer* des)
 	{
 		if (pre_turn == LEFT)
 		{
-			mTexture = KingImg[STAND_LEFT].mTexture;
-			rect_ = KingImg[STAND_LEFT].rect_;
+			mTexture = KingImg[STAND_LEFT][King_hat].mTexture;
+			rect_ = KingImg[STAND_LEFT][King_hat].rect_;
 		}
 		else
 		{
-			mTexture = KingImg[STAND_RIGHT].mTexture;
-			rect_ = KingImg[STAND_RIGHT].rect_;
+			mTexture = KingImg[STAND_RIGHT][King_hat].mTexture;
+			rect_ = KingImg[STAND_RIGHT][King_hat].rect_;
 		}
 		
 	}
@@ -878,7 +977,7 @@ void King::set_begin()
 	Action[3] = false;
 
 	x_stand = 808;
-	y_stand = 9000;
+	y_stand = 8900;
 	delta_x = 0;
 	delta_y = 0;
 	lost_height = 2000;
@@ -892,20 +991,26 @@ void King::set_begin()
 
 void King::loadKingImg(SDL_Renderer *des)
 {
-	KingImg[STAND_LEFT].LoadImg("img//King//king_left.png", des);
-	KingImg[STAND_RIGHT].LoadImg("img//King//king_right.png", des);
-	KingImg[RUN_LEFT].LoadImg("img//King//king_run_left.png", des);
-	KingImg[RUN_RIGHT].LoadImg("img//King//king_run_right.png", des);
-	KingImg[FALL_LEFT].LoadImg("img//King//king_fall_left.png", des);
-	KingImg[FALL_RIGHT].LoadImg("img//King//king_fall_right.png", des);
-	KingImg[JUMP_LEFT].LoadImg("img//King//king_jump_left.png", des);
-	KingImg[JUMP_RIGHT].LoadImg("img//King//king_jump_right.png", des);
-	KingImg[PRESS_LEFT].LoadImg("img//King//king_press_left.png", des);
-	KingImg[PRESS_RIGHT].LoadImg("img//King//king_press_right.png", des);
-	KingImg[FACE_DOWN_LEFT].LoadImg("img//King//face_down_left.png", des);
-	KingImg[FACE_DOWN_RIGHT].LoadImg("img//King//face_down_right.png", des);
-	KingImg[CLASH_LEFT].LoadImg("img//King//king_clash_left.png", des);
-	KingImg[CLASH_RIGHT].LoadImg("img//King//king_clash_right.png", des);
+		
+	for (int hat = 0; hat < HAT_COUNT; hat++)
+	{
+		std::string a = "img//King//" + std::to_string(hat);
+
+		KingImg[STAND_LEFT][hat].LoadImg(a+ "//king_left.png", des);
+		KingImg[STAND_RIGHT][hat].LoadImg(a+ "//king_right.png", des);
+		KingImg[RUN_LEFT][hat].LoadImg(a + "//king_run_left.png", des);
+		KingImg[RUN_RIGHT][hat].LoadImg(a + "//king_run_right.png", des);
+		KingImg[FALL_LEFT][hat].LoadImg(a + "//king_fall_left.png", des);
+		KingImg[FALL_RIGHT][hat].LoadImg(a + "//king_fall_right.png", des);
+		KingImg[JUMP_LEFT][hat].LoadImg(a + "//king_jump_left.png", des);
+		KingImg[JUMP_RIGHT][hat].LoadImg(a + "//king_jump_right.png", des);
+		KingImg[PRESS_LEFT][hat].LoadImg(a + "//king_press_left.png", des);
+		KingImg[PRESS_RIGHT][hat].LoadImg(a + "//king_press_right.png", des);
+		KingImg[FACE_DOWN_LEFT][hat].LoadImg(a + "//face_down_left.png", des);
+		KingImg[FACE_DOWN_RIGHT][hat].LoadImg(a + "//face_down_right.png", des);
+		KingImg[CLASH_LEFT][hat].LoadImg(a + "//king_clash_left.png", des);
+		KingImg[CLASH_RIGHT][hat].LoadImg(a + "//king_clash_right.png", des);
+	}
 
 	KingTale.LoadImg("img//King//king_tale.png", des);
 	char nam[] = "img//button//jump_effect_2.png";
@@ -930,6 +1035,8 @@ void King::Get_max_height()
 
 void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &back_ground_)
 {
+	Achive_ += max_height;
+
 	set_begin();
 	stage_ = stage;
 	char nameMap2[] = "map//map03.dat";
@@ -939,6 +1046,10 @@ void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &ba
 	hori = 8;
 	game_map.time =0;
 	game_map.LoadMap(nameMap2);
+	if (stage == 3)
+	{
+		GAME_MODE = 2;
+	}
 
 }
 void King::Reborn(int stage,SDL_Renderer* des,Object lose_)
@@ -951,7 +1062,7 @@ void King::Reborn(int stage,SDL_Renderer* des,Object lose_)
 }
 bool King::check_rope(Map& map)
 {
-	energy = delta_x * delta_x + delta_y * delta_y;
+
 	if (delta_y < -30) return 0;
 	int point_x = x_stand + rect_.w/2;
 	int point_y = y_stand + rect_.h/2;
@@ -984,7 +1095,7 @@ void King::render_rope(SDL_Renderer* des, Map& map)
 {
 
 	
-	r_length = std::sqrt((rope_stand_x1 - x_stand) * (rope_stand_x1 - x_stand) + (rope_stand_y1 - y_stand - rect_.h / 2) * (rope_stand_y1 - y_stand - rect_.h / 2));
+	r_length = std::sqrt((rope_stand_x1 - x_stand) * (rope_stand_x1 - x_stand ) + (rope_stand_y1 - y_stand - rect_.h / 2) * (rope_stand_y1 - y_stand - rect_.h / 2));
 	if ((rope_stand_x1 - x_stand) == 0) r_angle = 90;
 	else
 	{
@@ -1005,7 +1116,7 @@ void King::Jump_effect(SDL_Renderer* des, Map& map)
 	for (int i = 0; i < 30; i++)
 	{
 
-		if(jump_effect_frame[i] <24) jump_effect_frame[i]++;
-		jump_tale[jump_effect_frame[i]][king_tale_color].Render(jump_effect_x[i] - map.start_x_ + rect_.w / 2 - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.w / 2, jump_effect_y[i] - map.start_y_ + rect_.h / 2 - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.h / 2, des, NULL);
+		if(jump_effect_frame[i] <24 ) jump_effect_frame[i]++;
+		jump_tale[jump_effect_frame[i]][king_tale_color].Render(jump_effect_x[i] - map.start_x_ + rect_.w / 2 - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.w / 2, jump_effect_y[i] - map.start_y_ + rect_.h - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.h / 2 - 25, des, NULL);
 	}
 }

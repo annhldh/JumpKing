@@ -11,7 +11,7 @@
     bool check = Mix_Playing(1);
     if (!check)
     {
-        Mix_PlayChannel(1, music, 0);
+        Mix_PlayChannel(-1, music, 0);
     }
 
 

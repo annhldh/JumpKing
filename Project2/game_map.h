@@ -25,7 +25,7 @@ public:
 	void Refresh_Ice();
 	void Lazer();
 	Map game_map_;
-	TileMat tile_mat[MAX_TILES] = {};
+	TileMat tile_mat[MAX_TILES][2] = {};
 	Uint32 time=0;
 
 

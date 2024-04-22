@@ -5,6 +5,7 @@
 #include "game_map.h"
 #include "Sound.h"
 #include "Setting.h"
+#include "Shop.h"
 #include <fstream>
 #include < algorithm>
 SDL_Renderer* ve = NULL;
@@ -14,10 +15,11 @@ std::ifstream board;
 std::ofstream board2;
 SDL_Rect b_g = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 
-SDL_Color textColor = { 255, 0, 20 };
-std::string text;
+
+std::string Height_;
 Object pause_button;
 Object pause_touch;
+Shop shop_;
 
 
 bool init() {
@@ -74,7 +76,15 @@ Object snow[101];
 GameMap game_map;
 Object pause;
 Object volume_bar;
+
+
+TTF_Font* font;
+SDL_Color textColor = { 215, 0, 20 };
+Object exp_;
+
 Setting Option_;
+SDL_Surface* Cursor_d;
+
 
 SDL_Rect b_r = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 
@@ -86,14 +96,8 @@ void loadSufaceLayerObject( TTF_Font* font);
 void BackgroundRender();
 
 
-void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y) {
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
-    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
-    SDL_RenderCopy(renderer, textTexture, nullptr, &dstRect);
-    SDL_FreeSurface(textSurface);
-    SDL_DestroyTexture(textTexture);
-}
+
+
 void loadJump_bar()
 {
     jump_bar.LoadImg("img//f.png", ve);
@@ -107,7 +111,6 @@ void LoadImageFile()
     icon_ = IMG_Load("img//icon.png");
     SDL_SetWindowIcon(gWindow, icon_);
     king_.loadKingImg(ve);
-    king_.LoadImg("img//King//king_run_right.png", ve);
     king_.set_clips();
     lose_.LoadImg("img//rickroll_4k.png", ve);
     query_.LoadImg("img//reborn_query.png", ve);
@@ -117,12 +120,16 @@ void LoadImageFile()
     pause_touch.LoadImg("img//button//pause_touch.png", ve);
     pause.LoadImg("img//pause.png", ve);
     volume_bar.LoadImg("img//volume_bar.png", ve);
+    exp_.LoadImg("img//EXP.png",ve);
     rope.LoadImg("img//rope.png",ve);
     Option_.setting_. LoadImg("img//setting.png", ve);
     Option_.yes_button_.LoadImg("img//button//yes.png", ve);
     Option_.no_button_.LoadImg("img//button//no.png", ve);
-    char tale_name[] = "img//button//jump_effect_n.png";
 
+    Option_.footprint_distance_bar = volume_bar;
+    
+    Cursor_d = IMG_Load("img//Cursor_d.png");
+    char tale_name[] = "img//button//jump_effect_n.png";
     for (int i = 0; i < COLOR_COUNT; i++)
     {
         tale_name[25] = i+'0';
@@ -148,18 +155,18 @@ int main(int argc, char* args[]) {
         return 2;
     }
   
-
-    TTF_Font* font = TTF_OpenFont("Cutout.ttf", 40);
+    font = TTF_OpenFont("Cutout.ttf", 40);
     loadsnow();
     LoadImageFile();
     loadSFX();
     loadJump_bar();
     loadLeaderBoard();
     PlayDefault();
+    shop_.load_custom(ve);
+    SDL_Cursor* cursor = SDL_CreateColorCursor(Cursor_d, 0, 0);
+    SDL_SetCursor(cursor);
+   
 
-
-    
-    int stage_val = 0;
 
 
     
@@ -169,6 +176,7 @@ int main(int argc, char* args[]) {
         
         SDL_Event e;
         SDL_GetMouseState(&mouse_x, &mouse_y);
+    
         while (SDL_PollEvent(&e) != 0)
         {
             if (e.type == SDL_QUIT)
@@ -177,6 +185,7 @@ int main(int argc, char* args[]) {
             }
             king_.Control(e, ve,game_map.game_map_);
             if ( e.type == SDL_MOUSEBUTTONDOWN ) {
+                display_sound(tap);
                 if (mouse_x >= 860 && mouse_x <= 931 && mouse_y >= 20 && mouse_y <= 100)
                 {
                     pause_ = true;  
@@ -260,16 +269,21 @@ int main(int argc, char* args[]) {
 
                     }
                 }
+                if (OnShop_ == true)
+                {
+                    shop_.Shop_act(&e);
+                }
 
             }
         }
         
-        if (king_.stage_ > stage_val)
+        if (king_.stage_ > stage_val )
         {
             king_.loadStage(king_.stage_, game_map, ve, back_ground_);
             stage_val = king_.stage_;
        
         }
+
         Mix_VolumeMusic(volume);
         if (king_.Life == 0)
         {
@@ -290,10 +304,15 @@ int main(int argc, char* args[]) {
             }
             SDL_RenderPresent(ve);
         }
+        else if (OnShop_ == true)
+        {
+            
+            shop_.display_Shop(ve);
+            renderText(ve, font, shop_.exp_str, textColor, 100, 50);
+            SDL_RenderPresent(ve);
+        }
  
         else {
-     
-            
             SDL_RenderClear(ve);
             BackgroundRender();
 
@@ -302,14 +321,13 @@ int main(int argc, char* args[]) {
           
             game_map.DrawMap(ve);
             king_.Jump_effect(ve, game_map.game_map_);
+            if (king_.connect_rope == true)king_.render_rope(ve, game_map.game_map_);
             king_.Show_frame(ve);
   
-            if(king_.connect_rope==true)king_.render_rope(ve, game_map.game_map_);
+         
             loadSufaceLayerObject(font);
             if (mouse_x >= 860 && mouse_x <= 931 && mouse_y >= 20 && mouse_y <= 95) pause_touch.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
         
-
-            std::cout << king_tale_color << '\n';
             SDL_RenderPresent(ve);
             
             int endloop = SDL_GetTicks();
@@ -319,6 +337,7 @@ int main(int argc, char* args[]) {
                 SDL_Delay(1000 / 60 - timeloop);
             }
         }
+        loop++;
     }
 
     close();
@@ -333,6 +352,9 @@ void loadSFX()
     jumping = Mix_LoadWAV("sound//jumping.mp3");
     landing = Mix_LoadWAV("sound//landing.mp3");
     icebreaking = Mix_LoadWAV("sound//icebreaking.mp3");
+    tap = Mix_LoadWAV ("sound//tap.mp3");
+    door_open = Mix_LoadWAV("sound//door_open.mp3");
+
     music_theme[0] = Mix_LoadMUS("sound//theme2.mp3");
     music_theme[1] = Mix_LoadMUS("sound//theme2.mp3");
     music_theme[2] = Mix_LoadMUS("sound//theme2.mp3");
@@ -387,7 +409,7 @@ void loadSufaceLayerObject(TTF_Font* font)
     if (IsSnow== true)
     {
         snow[loop % 200 / 2 + 1].Render(0, 0, ve, NULL);
-        loop++;
+        
         if (GAME_MODE == 0)
         {
             bar_.Render(20, 655, ve, NULL);
@@ -396,8 +418,9 @@ void loadSufaceLayerObject(TTF_Font* font)
         }
     }
     
-    text = std::to_string(king_.max_height);
-    renderText(ve, font, text, textColor, SCREEN_WIDTH - 100, 100);
+    Height_ = std::to_string(king_.max_height);
+    exp_.Render(SCREEN_WIDTH - 180, 90, ve, NULL);
+    renderText(ve, font, Height_,textColor, SCREEN_WIDTH - 100, 100);
     pause_button.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
 
 }

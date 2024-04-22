@@ -37,6 +37,8 @@ const int SCREEN_BPP = 32;
 
 #define MAX_JUMP_FORCE 50
 
+
+
  struct Map
 {
 	// vi tri ria man hinh so voi map 
@@ -53,6 +55,7 @@ const int SCREEN_BPP = 32;
 	
 	std::vector <int> non_collision_block = { 0,4,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,48,49,53,54,55,56,81,82,83,84,85,86,87,88,90,91,92,93};
 	bool IsNonCollisionBlock(int val);
+	std::vector <int> Collection_block = { 4,25 };
 	std::vector<std::pair<int,int>> Ice_block = {};
 	std::vector<std::pair<int, int>> Laser_block = {};
 	std::vector<std::pair<int,int>> XO_block = {};
@@ -64,6 +67,8 @@ const int SCREEN_BPP = 32;
 	int o_cnt = 0;
 };
 
+ void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y);
+ SDL_Surface* getSurfaceFromTexture(SDL_Texture* texture, SDL_Renderer* renderer);
 
  extern Uint32 loop ;
 

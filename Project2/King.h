@@ -5,6 +5,13 @@
 #include "game_map.h"
 #include "SFX.h"
 #include "Setting.h"
+enum
+{
+	NO,
+	RED_CROWN,
+	GOLD_HAT,
+	HAT_COUNT,
+};
 class King: public Object
 {
 public:
@@ -40,7 +47,8 @@ public:
 		COUNT,
 	};
 
-	Object KingImg[COUNT];
+	
+	Object KingImg[COUNT][HAT_COUNT];
 	Object KingTale;
 	// nhan lenh dieu khien
 	void Control(SDL_Event events, SDL_Renderer* des,Map & map);
@@ -49,6 +57,7 @@ public:
 	void set_clips();
 	void CenterEntityOnMap(GameMap & game_map);
 	void CheckMap(Map& map);
+	void check_collect(Map& map,int val1, int val2, int val3, int val4);
 	void Show_frame(SDL_Renderer* des);
 	
 	void set_begin();

@@ -59,9 +59,9 @@ void Map::Update_xo(int mode)
 				if (xo[i][j] == 9) tile[XO_block[i * 3 + j].first][XO_block[i * 3 + j].second] = 90;
 				else if (xo[i][j] == 0) tile[XO_block[i * 3 + j].first][XO_block[i * 3 + j].second] = 92;
 				else if (xo[i][j] == 1) tile[XO_block[i * 3 + j].first][XO_block[i * 3 + j].second] = 91;
-				std::cout << xo[i][j] << " ";
+				
 			}
-			std::cout << '\n';
+			
 		}
 	}
 }
@@ -124,3 +124,13 @@ void Map::xo_rival()
 	else if (xo[2][1] == 9)xo[2][2] = 0;
 }
  Uint32 loop = 0;
+
+
+ void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y) {
+	 SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), color);
+	 SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	 SDL_Rect dstRect = { x, y, textSurface->w, textSurface->h };
+	 SDL_RenderCopy(renderer, textTexture, nullptr, &dstRect);
+	 SDL_FreeSurface(textSurface);
+	 SDL_DestroyTexture(textTexture);
+ }
