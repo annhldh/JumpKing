@@ -89,6 +89,7 @@ public:
 	int lost_height;
 	int Life;
 	int max_height = 0;
+	int score_ = 0;
 	int frame_ = 0;
 	int unframe_ = 0;
 	int money_ = 0;
@@ -106,6 +107,7 @@ public:
 	int hori = 8;
 	int energy = 3;
 	int fly_force=0;
+	
 
 	bool connect_rope = false;
 	bool pull = false;

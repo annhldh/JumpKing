@@ -31,6 +31,7 @@ King::King()
 	jump_effect_frame.resize(30, 0);
 	King_hat = 0;
 	
+	
 }
 King:: ~King()
 {
@@ -48,7 +49,7 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 		{
 			key_ = 1;
 			x_stand == 1160;
-			y_stand = 3000;
+			y_stand = 681;
 		}
 		if (on_ground == true)
 		{
@@ -309,53 +310,34 @@ void King::MoveAction(Map &map)
 void King :: CenterEntityOnMap(GameMap& game_map)
 {
 
-	if(true)
+
+	game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
+	if (x_stand < SCREEN_WIDTH / 2)
 	{
-		game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
-		if (x_stand < SCREEN_WIDTH / 2)
-		{
-			game_map.game_map_.start_x_ = 0;
-			x_pos = x_stand;
-		}
-		else if (x_stand + SCREEN_WIDTH / 2 >= game_map.game_map_.max_x_)
-		{
-			game_map.game_map_.start_x_ = game_map.game_map_.max_x_ - SCREEN_WIDTH;
-			x_pos = x_stand - game_map.game_map_.start_x_;
-		}
+		game_map.game_map_.start_x_ = 0;
+		x_pos = x_stand;
+	}
+	else if (x_stand + SCREEN_WIDTH / 2 >= game_map.game_map_.max_x_)
+	{
+		game_map.game_map_.start_x_ = game_map.game_map_.max_x_ - SCREEN_WIDTH;
+		x_pos = x_stand - game_map.game_map_.start_x_;
+	}
 
 
-			game_map.game_map_.start_y_ = y_stand - 2 * SCREEN_HEIGHT / 3;
+	game_map.game_map_.start_y_ = y_stand - 2 * SCREEN_HEIGHT / 3;
 		
-		if (y_stand < 2 * SCREEN_HEIGHT / 3)
-		{
-			game_map.game_map_.start_y_ = 0;
-			y_pos = y_stand;
-		}
-		else if (y_stand + SCREEN_HEIGHT / 3 >= game_map.game_map_.max_y_)
-		{
-			game_map.game_map_.start_y_ = game_map.game_map_.max_y_ - SCREEN_HEIGHT;
-			y_pos = y_stand - game_map.game_map_.start_y_;
-		}
-	}
-	else if (pull == false && GAME_MODE == 2)
+	if (y_stand < 2 * SCREEN_HEIGHT / 3)
 	{
-		game_map.game_map_.start_x_ = x_stand - SCREEN_WIDTH / 2;
-		if (x_stand < SCREEN_WIDTH / 2)
-		{
-			game_map.game_map_.start_x_ = 0;
-			x_pos = x_stand;
-		}
-		else if (x_stand + SCREEN_WIDTH / 2 >= game_map.game_map_.max_x_)
-		{
-			game_map.game_map_.start_x_ = game_map.game_map_.max_x_ - SCREEN_WIDTH;
-			x_pos = x_stand - game_map.game_map_.start_x_;
-		}
-		if (y_stand - 2 * SCREEN_HEIGHT / 3 <= game_map.game_map_.start_y_)
-		{
-			game_map.game_map_.start_y_ = y_stand - 2 * SCREEN_HEIGHT / 3;
-		}
-		/*else if (y_stand > game_map.game_map_.start_y_) Life--;*/
+		game_map.game_map_.start_y_ = 0;
+		y_pos = y_stand;
 	}
+	else if (y_stand + SCREEN_HEIGHT / 3 >= game_map.game_map_.max_y_)
+	{
+		game_map.game_map_.start_y_ = game_map.game_map_.max_y_ - SCREEN_HEIGHT;
+		y_pos = y_stand - game_map.game_map_.start_y_;
+	}
+	
+
 	
 	
 }
@@ -659,6 +641,7 @@ void King::CheckMap(Map& map_data)
 
 				Timer %= 60;
 
+				hori = 8;
 				energy = 3;
 
 			}
@@ -995,6 +978,7 @@ void King::set_begin()
 	max_height = 0;
 	key_ = 0;
 
+
 }
 
 void King::loadKingImg(SDL_Renderer *des)
@@ -1044,7 +1028,8 @@ void King::Get_max_height()
 void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &back_ground_)
 {
 	Achive_ += max_height;
-
+	score_ += max_height;
+	std::cout << score_ << '\n';;
 	set_begin();
 	stage_ = stage;
 	char nameMap2[] = "map//map03.dat";
@@ -1058,6 +1043,8 @@ void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &ba
 	{
 		GAME_MODE = 2;
 	}
+	if(stage==0) 	score_ = 0;
+	
 
 }
 void King::Reborn(int stage,SDL_Renderer* des,Object lose_)

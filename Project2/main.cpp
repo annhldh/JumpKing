@@ -220,10 +220,10 @@ int main(int argc, char* args[]) {
                         {
                             if (volume < 128) volume += 16;
                         }
-
                         else if (mouse_x >= 315 && mouse_x <= 695 && mouse_y >= 390 && mouse_y <= 505)
                         {
-                            bo[0].first = king_.max_height;
+                            bo[0].first = king_.score_ + king_.max_height;
+                       
                             bo[0].second = "o N Y";
                             sort(bo, bo + 11);
 
@@ -254,7 +254,7 @@ int main(int argc, char* args[]) {
                     }
                     else if (mouse_x >= 524 && mouse_x <= 754 && mouse_y >= 464 && mouse_y <= 539)
                     {
-                        bo[0].first = king_.max_height;
+                        bo[0].first = king_.score_+ king_.max_height;
                         bo[0].second = "Player";
                         sort(bo, bo + 11);
 

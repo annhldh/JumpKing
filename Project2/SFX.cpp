@@ -21,7 +21,7 @@
  bool is_quit = false;
  bool pause_ = false;
  bool sett = false;
- int king_tale_color = 1;
+ int king_tale_color = 0;
  bool IsSnow = true;
  bool OnShop_ = false;
 

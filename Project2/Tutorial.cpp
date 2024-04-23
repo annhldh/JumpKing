@@ -6,7 +6,7 @@ void Tutorial::Display_tutorial(SDL_Renderer* des)
 	if (isTutor == true)
 	{
 		tutor[GAME_MODE].Render(0, y_frame_[frame_], des, NULL);
-		if ( frame_ < 689)frame_+=10;
+		if ( frame_ < 679)frame_+=20;
 	}
 	else Tutor_button.Render(0, 0, des, NULL);
 }
