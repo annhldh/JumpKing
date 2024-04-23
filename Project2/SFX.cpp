@@ -15,6 +15,8 @@
  int GAME_MODE = 0;
  Object rope ;
 
+
+ bool isDiebyLazer = false;
  int mouse_x = 0, mouse_y = 0;
  bool is_quit = false;
  bool pause_ = false;
@@ -29,5 +31,6 @@
  int tile_style_ = 0;
  bool isVictory = false;
  bool isTutor = false;
+
 
  extern int stage_val = 0;

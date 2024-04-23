@@ -360,11 +360,6 @@ void King :: CenterEntityOnMap(GameMap& game_map)
 	
 }
 
-void King:: check_collect(Map& map_data, int val1, int val2, int val3, int val4)
-{
-
-
-}
 
 void King::CheckMap(Map& map_data)
 {
@@ -446,9 +441,10 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y2][x2] = 0;
 				money_++;
 			}
-			if (val1 == 48 && val2==48 && val3 == 48 && val4==48)
+			if (val1 == 48 || val2== 48 || val3 == 48 || val4==48)
 			{
 				Life--;
+				isDiebyLazer = true;
 			}
 			else if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2) && map_data.IsNonCollisionBlock(val3) && map_data.IsNonCollisionBlock(val4)))
 			{
@@ -654,6 +650,11 @@ void King::CheckMap(Map& map_data)
 					display_sound(icebreaking);
 					map_data.tile[y2][x4] -= Timer / 60;
 				}
+				if (val1 == 48 || val2 == 48 || val3 == 48 || val4 == 48)
+				{
+					Life--;
+					isDiebyLazer = true;
+				}
 				
 
 				Timer %= 60;
@@ -672,6 +673,7 @@ void King::CheckMap(Map& map_data)
 			if (val1 == 48 || val2==48||val3==48 ||val4==48)
 			{
 				Life--;
+				isDiebyLazer = true;
 			}
 
 			if (val1 == 4)
@@ -1063,6 +1065,11 @@ void King::Reborn(int stage,SDL_Renderer* des,Object lose_)
 	lose_.Render(0, 0, des, NULL);
 	SDL_RenderPresent(des);
 	display_rick(music_rick);
+	if (isDiebyLazer)
+	{
+		y_stand = 2569;
+		x_stand = 544;
+	}
 	Life = 1;
 	display_music_theme(music_theme[stage]);
 }

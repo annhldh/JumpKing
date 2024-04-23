@@ -349,7 +349,7 @@ int main(int argc, char* args[]) {
             }
         }
         loop++;
-        std::cout << isVictory << '\n';
+
     }
 
     close();

@@ -20,6 +20,7 @@ extern int volume;
 extern int GAME_MODE;
 extern Object rope;
 
+extern bool isDiebyLazer ;
 extern int mouse_x , mouse_y ;
 extern bool is_quit;
 extern bool pause_;

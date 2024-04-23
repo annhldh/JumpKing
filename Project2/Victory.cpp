@@ -26,5 +26,5 @@ void Victory::Set_clip(SDL_Renderer* des)
 	}
 	Congrats.LoadImg("img//Congrats.png",des);
 	background_.LoadImg("img//black.png", des);
-	std::cout << Congrats.rect_.h;
+
 }
