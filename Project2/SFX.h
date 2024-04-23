@@ -34,4 +34,5 @@ extern int King_hat;
 extern int stage_val;
 extern int footprint_distance;
 extern int tile_style_;
+extern bool isVictory;
 #endif // !SFX_H_

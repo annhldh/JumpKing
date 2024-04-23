@@ -27,5 +27,5 @@
  Uint32 Achive_ = 10000;
  int footprint_distance = 15;
  int tile_style_ = 0;
-
+ bool isVictory = false;
  extern int stage_val = 0;

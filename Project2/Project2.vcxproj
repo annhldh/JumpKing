@@ -140,7 +140,6 @@
     <ClInclude Include="game_map.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Shop.h" />
-    <ClInclude Include="XO.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="CommonFunc.h" />
     <ClInclude Include="King.h" />
@@ -148,6 +147,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Victory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game_map.cpp" />
@@ -160,6 +160,7 @@
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Victory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

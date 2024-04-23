@@ -5,6 +5,7 @@
 #include "game_map.h"
 #include "SFX.h"
 #include "Setting.h"
+#include "Victory.h"
 enum
 {
 	NO,

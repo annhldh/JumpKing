@@ -6,6 +6,7 @@
 #include "Sound.h"
 #include "Setting.h"
 #include "Shop.h"
+#include "Victory.h"
 #include <fstream>
 #include < algorithm>
 SDL_Renderer* ve = NULL;
@@ -20,7 +21,7 @@ std::string Height_;
 Object pause_button;
 Object pause_touch;
 Shop shop_;
-
+Victory victory_;
 
 bool init() {
     bool success = true;
@@ -135,6 +136,7 @@ void LoadImageFile()
         tale_name[25] = i+'0';
         Option_.tale_color[i].LoadImg(tale_name, ve);
     }
+    victory_.Set_clip(ve);
 }
 void PlayDefault()
 {
@@ -166,7 +168,6 @@ int main(int argc, char* args[]) {
     SDL_Cursor* cursor = SDL_CreateColorCursor(Cursor_d, 0, 0);
     SDL_SetCursor(cursor);
    
-
 
 
     
@@ -311,7 +312,12 @@ int main(int argc, char* args[]) {
             renderText(ve, font, shop_.exp_str, textColor, 100, 50);
             SDL_RenderPresent(ve);
         }
- 
+        else if (isVictory == true)
+        {
+            victory_.Display_Congrats(ve);
+            victory_.back(e);
+            SDL_RenderPresent(ve);
+        }
         else {
             SDL_RenderClear(ve);
             BackgroundRender();
@@ -338,6 +344,7 @@ int main(int argc, char* args[]) {
             }
         }
         loop++;
+        std::cout << isVictory << '\n';
     }
 
     close();

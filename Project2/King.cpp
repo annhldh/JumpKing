@@ -46,6 +46,7 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 		
 		if (events.key.keysym.sym == SDLK_r)
 		{
+			key_ = 1;
 			x_stand == 1160;
 			y_stand = 3000;
 		}
@@ -408,10 +409,12 @@ void King::CheckMap(Map& map_data)
 			if (val1 == 12 && key_>0)
 			{
 				map_data.tile[y1][x2] = 13;
+				isVictory = true;
 			}
 			else if (val2 == 12 && key_>0)
 			{
 				map_data.tile[y2][x2] = 13;
+				isVictory = true;
 			}
 			if (val1 == 25)
 			{
@@ -471,10 +474,13 @@ void King::CheckMap(Map& map_data)
 			if (val1 == 12 && key_>0)
 			{
 				map_data.tile[y1][x1] = 13;
+				isVictory = true;
 			}
 			else if (val2 == 12 && key_>0)
 			{
 				map_data.tile[y2][x1] = 13;
+				isVictory = true;
+
 			}
 			if (val1 == 25)
 			{
@@ -1063,7 +1069,7 @@ void King::Reborn(int stage,SDL_Renderer* des,Object lose_)
 bool King::check_rope(Map& map)
 {
 
-	if (delta_y < -30) return 0;
+	if (sqrt(delta_y*delta_y+delta_x*delta_x) > 40) return 0;
 	int point_x = x_stand + rect_.w/2;
 	int point_y = y_stand + rect_.h/2;
 	int tile_x = point_x / TILE_SIZE;

@@ -1,37 +1,7 @@
-﻿  King.cpp
+﻿  main.cpp
 D:\JumpKing\Project2\CommonFunc.h(14,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'King.cpp')
+  (compiling source file 'main.cpp')
   
-D:\JumpKing\Project2\King.cpp(49,12): warning C4553: '==': result of expression not used; did you intend '='?
-D:\JumpKing\Project2\King.cpp(131,18): warning C4244: '=': conversion from 'const _Ty' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(131,18): warning C4244:         with
-D:\JumpKing\Project2\King.cpp(131,18): warning C4244:         [
-D:\JumpKing\Project2\King.cpp(131,18): warning C4244:             _Ty=double
-D:\JumpKing\Project2\King.cpp(131,18): warning C4244:         ]
-D:\JumpKing\Project2\King.cpp(133,86): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(133,86): warning C4244:         with
-D:\JumpKing\Project2\King.cpp(133,86): warning C4244:         [
-D:\JumpKing\Project2\King.cpp(133,86): warning C4244:             _Ty=double
-D:\JumpKing\Project2\King.cpp(133,86): warning C4244:         ]
-D:\JumpKing\Project2\King.cpp(150,38): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(152,27): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(156,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(184,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(185,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(392,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(393,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(394,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(395,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(456,21): warning C4244: '/=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(515,21): warning C4244: '/=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(535,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(536,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(537,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(538,29): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(794,130): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(795,116): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(800,41): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(1080,33): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(1098,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-D:\JumpKing\Project2\King.cpp(1102,105): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\JumpKing\Project2\main.cpp(400,10): warning C4101: 'a': unreferenced local variable
+D:\JumpKing\Project2\main.cpp(437,87): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   Project2.vcxproj -> D:\JumpKing\Debug\Project2.exe
