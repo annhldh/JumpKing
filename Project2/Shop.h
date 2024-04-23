@@ -19,7 +19,7 @@ public:
 	SDL_Surface* cursor[CURSOR_COUNT];
 	bool lock_cursor[CURSOR_COUNT] = { 1,0,0,0,0,0,0 };
 	bool lock_map[2] = { 1,0 };
-
+	SDL_Color color = { 234,63,247 };
 
 	int choosed[4] = { 0,0,0,0 };
 

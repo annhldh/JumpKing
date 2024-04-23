@@ -147,6 +147,7 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Tutorial.h" />
     <ClInclude Include="Victory.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
     <ClCompile Include="Victory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

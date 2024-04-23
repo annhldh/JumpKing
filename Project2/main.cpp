@@ -7,6 +7,7 @@
 #include "Setting.h"
 #include "Shop.h"
 #include "Victory.h"
+#include "Tutorial.h"
 #include <fstream>
 #include < algorithm>
 SDL_Renderer* ve = NULL;
@@ -22,6 +23,7 @@ Object pause_button;
 Object pause_touch;
 Shop shop_;
 Victory victory_;
+Tutorial tutorial_;
 
 bool init() {
     bool success = true;
@@ -137,6 +139,7 @@ void LoadImageFile()
         Option_.tale_color[i].LoadImg(tale_name, ve);
     }
     victory_.Set_clip(ve);
+    tutorial_.loadTutor(ve);
 }
 void PlayDefault()
 {
@@ -326,14 +329,16 @@ int main(int argc, char* args[]) {
             king_.MoveAction(game_map.game_map_);
           
             game_map.DrawMap(ve);
+            
+
             king_.Jump_effect(ve, game_map.game_map_);
             if (king_.connect_rope == true)king_.render_rope(ve, game_map.game_map_);
             king_.Show_frame(ve);
   
-         
+            tutorial_.Buttton(&e);
             loadSufaceLayerObject(font);
             if (mouse_x >= 860 && mouse_x <= 931 && mouse_y >= 20 && mouse_y <= 95) pause_touch.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
-        
+            
             SDL_RenderPresent(ve);
             
             int endloop = SDL_GetTicks();
@@ -429,6 +434,8 @@ void loadSufaceLayerObject(TTF_Font* font)
     exp_.Render(SCREEN_WIDTH - 180, 90, ve, NULL);
     renderText(ve, font, Height_,textColor, SCREEN_WIDTH - 100, 100);
     pause_button.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
+    tutorial_.Display_tutorial(ve);
+   
 
 }
 void BackgroundRender()

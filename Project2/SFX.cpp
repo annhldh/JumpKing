@@ -28,4 +28,6 @@
  int footprint_distance = 15;
  int tile_style_ = 0;
  bool isVictory = false;
+ bool isTutor = false;
+
  extern int stage_val = 0;

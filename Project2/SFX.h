@@ -35,4 +35,5 @@ extern int stage_val;
 extern int footprint_distance;
 extern int tile_style_;
 extern bool isVictory;
+extern bool isTutor;
 #endif // !SFX_H_

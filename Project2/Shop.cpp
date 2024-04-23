@@ -15,22 +15,40 @@ void Shop::display_Shop(SDL_Renderer* des)
 	for (int i = 0; i < HAT_COUNT; i++)
 	{
 		king_hat_display[i].Render(100 + 100 * i, 100, des, NULL);
-		if (lock_hat[i] == false) lock.Render(100 + 100 * i, 100, des, NULL);
+		if (lock_hat[i] == false)
+		{
+			lock.Render(100 + 100 * i, 100, des, NULL);
+			renderText(des, fonte, std::to_string(hat_cost[i]),color,100+100*i,160);
+		}
+		
 	}
 	for (int i = 0; i < COLOR_COUNT; i++)
 	{
 		king_tale_display[i].Render(100 + 100 * i, 200, des, NULL);
-		if (lock_tale[i] == false) lock.Render(100 + 100 * i, 200, des, NULL);
+		if (lock_tale[i] == false)
+		{
+			lock.Render(100 + 100 * i, 200, des, NULL);
+			renderText(des, fonte, std::to_string(tale_cost[i]), color, 100 + 100 * i, 260);
+		}
 	}
 	for (int i = 0; i < CURSOR_COUNT; i++)
 	{
 		cursor_display[i].Render(100 + 100 * i, 300, des, NULL);
-		if (lock_cursor[i] == false) lock.Render(100 + 100 * i, 300, des, NULL);
+		if (lock_cursor[i] == false)
+		{
+			lock.Render(100 + 100 * i, 300, des, NULL);
+			renderText(des, fonte, std::to_string(cursor_cost[i]), color, 100 + 100 * i, 360);
+		}
 	}
 	for (int i = 0; i < 2; i++)
 	{
 		map_demo_block[i].Render(100 + 100 * i, 400, des, NULL);
-		if (lock_map[i] == false) lock.Render(100 + 100 * i, 400, des, NULL);
+		if (lock_map[i] == false)
+		{
+			lock.Render(100 + 100 * i, 400, des, NULL);
+			renderText(des, fonte, std::to_string(map_cost[i]), color, 100 + 100 * i, 474);
+		}
+
 	}
 
 	Back.Render(SCREEN_WIDTH - 200, 20, des, NULL);
@@ -130,6 +148,7 @@ void Shop::load_custom(SDL_Renderer* des)
 	Back.LoadImg("img//Shop//Back.png", des);
 	exp_icon.LoadImg("img//EXP.png",des);
 	choose.LoadImg("img//Shop//choose.png", des);
+	fonte = TTF_OpenFont("Cutout.ttf", 20);
 
 	char nam[] = "img//Shop//hat_n.png";
 	for (int i = 0; i < HAT_COUNT; i++)
