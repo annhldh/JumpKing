@@ -149,28 +149,41 @@ void Shop::load_custom(SDL_Renderer* des)
 	exp_icon.LoadImg("img//EXP.png",des);
 	choose.LoadImg("img//Shop//choose.png", des);
 	fonte = TTF_OpenFont("Cutout.ttf", 20);
+	shop_data_in.open("Shop_data.txt");
 
 	char nam[] = "img//Shop//hat_n.png";
 	for (int i = 0; i < HAT_COUNT; i++)
 	{
 		nam[15] = i + '0';
 		king_hat_display[i].LoadImg(nam, des);
+		shop_data_in >>lock_hat[i] ;
 
-	}
-	char nam2[] = "img//Shop//Cursor_n.png";
-	for (int i = 0; i < CURSOR_COUNT ;i++)
-	{
-		nam2[18] = i + '0';
-		cursor_display[i].LoadImg(nam2, des);
-		cursor[i]= IMG_Load(nam2);
 	}
 	char nam3[] = "img//Shop//jump_effect_n.png";
 	for (int i = 0; i < COLOR_COUNT; i++)
 	{
 		nam3[23] = i + '0';
 		king_tale_display[i].LoadImg(nam3, des);
+		shop_data_in >> lock_tale[i];
 		
 	}
+	char nam2[] = "img//Shop//Cursor_n.png";
+	for (int i = 0; i < CURSOR_COUNT; i++)
+	{
+		nam2[18] = i + '0';
+		cursor_display[i].LoadImg(nam2, des);
+		cursor[i] = IMG_Load(nam2);
+		shop_data_in >> lock_cursor[i];
+	}
+
+	char nam6[] = "img//Shop//map_demo_n.png";
+	for (int i = 0; i < 2; i++)
+	{
+		nam6[20] = i + '0';
+		map_demo[i].LoadImg(nam6, des);
+		shop_data_in >> lock_map[i];
+	}
+
 	char nam4[] = "img//Shop//demo_n.png";
 	for (int i = 0; i < HAT_COUNT; i++)
 	{
@@ -184,12 +197,6 @@ void Shop::load_custom(SDL_Renderer* des)
 		nam5[22] = i + '0';
 		map_demo_block[i].LoadImg(nam5, des);
 		
-	}
-	char nam6[] = "img//Shop//map_demo_n.png";
-	for (int i = 0; i < 2; i++)
-	{
-		nam6[20] = i + '0';
-		map_demo[i].LoadImg(nam6, des);
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -235,6 +242,28 @@ void Shop::display_demo(SDL_Renderer* des)
 	for (int i = 0; i < 8; i++)
 	{
 		map_demo[choosed[3]].Render(300, 608, des, &map_demo_clip[frame_demo]);
+	}
+
+}
+
+void Shop:: SaveShopData()
+{
+	shop_data_out.open("Shop_data.txt",std::ios::trunc);
+	for (int i = 0; i < HAT_COUNT; i++)
+	{
+		shop_data_out << lock_hat[i]<<" ";
+	}
+	for (int i = 0; i < COLOR_COUNT; i++)
+	{
+		shop_data_out << lock_tale[i]<<" ";
+	}
+	for (int i = 0; i < CURSOR_COUNT; i++)
+	{
+		shop_data_out << lock_cursor[i]<<" ";
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		shop_data_out << lock_map[i]<<" ";
 	}
 
 }

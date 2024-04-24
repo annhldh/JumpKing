@@ -46,9 +46,16 @@ public:
 	void Shop_act(SDL_Event* events);
 	void load_custom(SDL_Renderer* des);
 	void display_demo(SDL_Renderer* des);
+	void LoadShopData();
+	void SaveShopData();
+
+
 	TTF_Font* fonte;
 	std::string exp_str;
 	Object exp_icon;
+
+	std::ifstream shop_data_in;
+	std::ofstream shop_data_out;
 };
 
 

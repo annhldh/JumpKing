@@ -923,6 +923,7 @@ void King::Show_frame(SDL_Renderer* des)
 			mTexture = KingImg[RUN_RIGHT][King_hat].mTexture;
 			rect_ = KingImg[RUN_RIGHT][King_hat].rect_;
 		}
+		jump_tale[0][king_tale_color].Render(x_pos + rect_.w / 16 - jump_tale[0][king_tale_color].rect_.w / 2  , y_pos + rect_.h - jump_tale[0][king_tale_color].rect_.h / 2 - 25, des, NULL);
 
 	}
 	else 
@@ -983,10 +984,10 @@ void King::set_begin()
 
 void King::loadKingImg(SDL_Renderer *des)
 {
-		
+	std::string a;
 	for (int hat = 0; hat < HAT_COUNT; hat++)
 	{
-		std::string a = "img//King//" + std::to_string(hat);
+		 a= "img//King//" + std::to_string(hat);
 
 		KingImg[STAND_LEFT][hat].LoadImg(a+ "//king_left.png", des);
 		KingImg[STAND_RIGHT][hat].LoadImg(a+ "//king_right.png", des);
@@ -1044,6 +1045,7 @@ void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &ba
 		GAME_MODE = 2;
 	}
 	if(stage==0) 	score_ = 0;
+	pause_ = false;
 	
 
 }

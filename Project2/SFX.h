@@ -12,6 +12,7 @@ extern Mix_Chunk* landing;
 extern Mix_Chunk* icebreaking;
 extern Mix_Chunk* tap;
 extern Mix_Chunk* door_open;
+extern Mix_Chunk* bird;
 
 extern Mix_Music* music_theme[4];
 extern Mix_Music* music_rick;

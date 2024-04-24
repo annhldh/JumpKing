@@ -5,13 +5,14 @@
  Mix_Chunk* jumping = nullptr;
  Mix_Chunk* landing = nullptr;  
  Mix_Chunk* tap = nullptr;
- Mix_Chunk* icebreaking;
+ Mix_Chunk* icebreaking = nullptr;
  Mix_Chunk* door_open = nullptr;
+ Mix_Chunk* bird=nullptr;
 
 
  Mix_Music* music_theme[4];
  Mix_Music* music_rick;
- int volume = 64;
+ int volume = 48;
  int GAME_MODE = 0;
  Object rope ;
 
