@@ -185,7 +185,7 @@ int main(int argc, char* args[]) {
         {
             query_.Render(100, 100, ve, NULL);
             SDL_RenderPresent(ve);
-            
+   
         }
         else if (pause_ == true)
         {
@@ -224,6 +224,7 @@ int main(int argc, char* args[]) {
             king_.Jump_effect(ve, game_map.game_map_);
             if (king_.connect_rope == true)king_.render_rope(ve, game_map.game_map_);
             king_.Show_frame(ve);
+            if (king_.is_landing == true) king_.Landing_effect(ve, game_map.game_map_);
   
             tutorial_.Buttton(&e);
             loadSufaceLayerObject(font);
@@ -478,12 +479,12 @@ void mouseEvent()
 
     if (king_.Life == 0)
     {
-        if (mouse_x >= 205 && mouse_x <= 415 && mouse_y >= 465 && mouse_y <= 540)
+        if (mouse_x >= 510 && mouse_x <= 730 && mouse_y >= 590 && mouse_y <= 660)
         {
 
             king_.Reborn(stage_val, ve, lose_);
         }
-        else if (mouse_x >= 524 && mouse_x <= 754 && mouse_y >= 464 && mouse_y <= 539)
+        else if (mouse_x >= 225 && mouse_x <= 350 && mouse_y >= 580 && mouse_y <= 670)
         {
             LeaderBoard();
             king_.loadStage(0, game_map, ve, back_ground_);

@@ -22,7 +22,7 @@ void Victory:: Display_Congrats(SDL_Renderer* des)
 		else if (is_queue == false)
 		{
 			Congrats.Render(0, 0, des, &clip[frame_], 0, 0, &screen);
-			if (frame_ < 1899 && loop % 20 == 0) frame_++;
+			if (frame_ < 1719 && loop % 20 == 0) frame_++;
 		}
 	}
 	
@@ -37,7 +37,7 @@ void Victory::back(SDL_Event events)
 		{
 			is_queue = false;
 		}
-		else if(frame_>=1800 || (frame_>=51 && GAME_MODE==2))
+		else if(frame_>=1720 || (frame_>=51 && GAME_MODE==2))
 		{
 			frame_ = 0;
 			frame_scroll = 0;

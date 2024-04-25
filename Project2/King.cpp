@@ -591,7 +591,16 @@ void King::CheckMap(Map& map_data)
 			{
 				y_stand = (y2)*TILE_SIZE - rect_.h;
 				delta_y = 0;
-				if (on_ground == false) display_sound(landing);
+				if (on_ground == false)
+				{
+					display_sound(landing);
+					is_landing = true;
+					landing_x = x_stand + rect_.w/2 - landing_effect[0].rect_.w / 2;
+					landing_y = y_stand + rect_.h - landing_effect[0].rect_.h;
+
+				}
+
+
 				on_ground = true;
 				lost_height -= y_stand;
 				Action[CLASH] = false;
@@ -1017,6 +1026,12 @@ void King::loadKingImg(SDL_Renderer *des)
 			jump_tale[i][color].rect_.h = 48 - 2 * i;
 		}
 	}
+	char nam2[] = "img//King//landing_effect_n.png";
+	for (int i = 0; i < 4; i++)
+	{
+		nam2[26] = i + '0';
+		landing_effect[i].LoadImg(nam2, des);
+	}
 	
 }
 
@@ -1083,6 +1098,9 @@ bool King::check_rope(Map& map)
 				rope_stand_x2= (tile_x + j+1) * TILE_SIZE;
 				rope_stand_y2 = rope_stand_y1;
 
+				on_ground = false;
+				Action[CLASH] = false;
+
 				return 1;
 
 			}
@@ -1120,5 +1138,19 @@ void King::Jump_effect(SDL_Renderer* des, Map& map)
 
 		if(jump_effect_frame[i] <24 ) jump_effect_frame[i]++;
 		jump_tale[jump_effect_frame[i]][king_tale_color].Render(jump_effect_x[i] - map.start_x_ + rect_.w / 2 - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.w / 2, jump_effect_y[i] - map.start_y_ + rect_.h - jump_tale[jump_effect_frame[i]][king_tale_color].rect_.h / 2 - 25, des, NULL);
+	}
+}
+
+void King::Landing_effect(SDL_Renderer*des, Map &map)
+{
+	if (landing_effect_frame_ < 3)
+	{
+		landing_effect[landing_effect_frame_].Render(landing_x - map.start_x_, landing_y - map.start_y_, des, NULL);
+		if (loop % 8 == 0) landing_effect_frame_++;
+	}
+	else
+	{
+		landing_effect_frame_ = 0;
+		is_landing = false;
 	}
 }

@@ -20,7 +20,7 @@
  void display_music_theme(Mix_Music* theme)
  {  
      Mix_PlayMusic(theme,-1);
-     //Mix_VolumeMusic(volume);
+     //Mix_Volume-Music(volume);
 
  }
  void display_rick(Mix_Music* rick)

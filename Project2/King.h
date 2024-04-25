@@ -139,16 +139,25 @@ public:
 	int pre_pos_y = 0;
 	int rope_forces = 0;
 	int kinetic_e = 0;
+	int landing_effect_frame_ = 0;
 
 	double bounderies = 45;
 
 	Object jump_tale[25][COLOR_COUNT];
+	Object landing_effect[4];
+
+
 	std::vector<int> jump_effect_x;
 
 	std::vector<int> jump_effect_y;
 	std::vector<int> jump_effect_frame;
 	int jump_effect_index=0;
 	void Jump_effect(SDL_Renderer* des, Map& map);
+	void Landing_effect(SDL_Renderer* des, Map& map);
+
+	int landing_x;
+	int landing_y;
+	bool is_landing = false;
 
 
 };
