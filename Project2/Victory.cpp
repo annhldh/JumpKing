@@ -22,7 +22,7 @@ void Victory:: Display_Congrats(SDL_Renderer* des)
 		else if (is_queue == false)
 		{
 			Congrats.Render(0, 0, des, &clip[frame_], 0, 0, &screen);
-			if (frame_ < 1719 && loop % 20 == 0) frame_++;
+			if (frame_ < 1720 && loop % 20 == 0) frame_++;
 		}
 	}
 	

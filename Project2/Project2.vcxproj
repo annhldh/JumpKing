@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Archive.h" />
     <ClInclude Include="game_map.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Shop.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Victory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Archive.cpp" />
     <ClCompile Include="game_map.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="CommonFunc.cpp" />

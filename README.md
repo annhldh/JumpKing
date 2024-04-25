@@ -74,13 +74,14 @@
 | ![image](Project2/img/demo_game/demo_1.png) | King | Nhân vật chính của game|
 | ![image](Project2/img/demo_game/tile_common.png) | Common tile map| Các khối bản đồ thông thường|
 | ![image](Project2/img/demo_game/forces_bar.png) | Force bar | Thanh căn lực|
-| ![image](Project2/img/demo_game/tile_)   |  | Khối bản đồ nghiêng, bị trượt xuống khi rơi vào |
+| ![image](Project2/img/demo_game/tile_.png)   | Tilted map block | Khối bản đồ nghiêng, bị trượt xuống khi rơi vào |
 | ![image](Project2/img/demo_game/ice_breaking.png)   | Breaking Ice| Khối băng non, dễ vỡ khi đứng trên|
 | ![image](Project2/img/demo_game/blue_ice.png) | Blue Ice | Khối băng, trơn trượt|
 | ![image](Project2/img/demo_game/46.png)   | Lazer Statue | Bức tượng phóng tia Lazer |
 | ![image](Project2/img/demo_game/93.png)   | Unexpected Threat | vị trí nối dây co dãn trong chế độ Rope |
 | ![image](Project2/img/demo_game/25.png)   | Key | Chìa khóa, cần để mở cửa qua màn, mở hòm kho báu |
 | ![image](Project2/img/demo_game/12.png)   | Treasure| Kho báu, chứa phần thưởng cuối cùng của các chế độ chơi|
+| ![image](Project2/img/demo_game/Archive.png)   | Archiverment| Thành tựu đạt được qua việc hoàn thành màn chơi |
 | ![image](Project2/img/demo_game/stage_gate.png)   | Stage gate | Cửa qua màn |
 | ![image](Project2/img/demo_game/81.png)   | Mode gate | Cửa chọn chế độ chơi, shop|
 | ![image](Project2/img/demo_game/height.png)   | Height | Độ cao đạt được, quy đổi thành đơn vị tiền khi kết thúc lượt chơi  |

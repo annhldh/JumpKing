@@ -8,6 +8,7 @@
 #include "Shop.h"
 #include "Victory.h"
 #include "Tutorial.h"
+#include "Archive.h"
 #include < algorithm>
 
 
@@ -25,6 +26,7 @@ Object pause_touch;
 Shop shop_;
 Victory victory_;
 Tutorial tutorial_;
+Archive Archivement_;
 
 bool init() {
     bool success = true;
@@ -180,7 +182,6 @@ int main(int argc, char* args[]) {
        
         }
 
-        
         if (king_.Life == 0)
         {
             query_.Render(100, 100, ve, NULL);
@@ -211,6 +212,9 @@ int main(int argc, char* args[]) {
             victory_.back(e);
             SDL_RenderPresent(ve);
         }
+
+
+
         else {
             SDL_RenderClear(ve);
             BackgroundRender();
@@ -228,7 +232,7 @@ int main(int argc, char* args[]) {
   
             tutorial_.Buttton(&e);
             loadSufaceLayerObject(font);
-            if (mouse_x >= 860 && mouse_x <= 931 && mouse_y >= 20 && mouse_y <= 95) pause_touch.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
+            Archivement_.UpdateArchive();
             
             SDL_RenderPresent(ve);
             
@@ -285,6 +289,7 @@ void LoadImageFile()
     }
     victory_.Set_clip(ve);
     tutorial_.loadTutor(ve);
+    Archivement_.LoadArchiveImg(ve);
 }
 
 void loadSFX()
@@ -381,6 +386,8 @@ void loadSufaceLayerObject(TTF_Font* font)
     exp_.Render(SCREEN_WIDTH - 180, 90, ve, NULL);
     renderText(ve, font, Height_,textColor, SCREEN_WIDTH - 100, 100);
     pause_button.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
+    if (mouse_x >= 860 && mouse_x <= 931 && mouse_y >= 20 && mouse_y <= 95) pause_touch.Render(SCREEN_WIDTH - 100, 20, ve, NULL);
+    if (stage_val == 0) Archivement_.DisplayAchive(ve);
     tutorial_.Display_tutorial(ve);
  
    
