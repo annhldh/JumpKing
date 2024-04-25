@@ -979,7 +979,6 @@ void King::set_begin()
 	max_height = 0;
 	key_ = 0;
 
-
 }
 
 void King::loadKingImg(SDL_Renderer *des)
@@ -1046,6 +1045,7 @@ void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &ba
 	}
 	if(stage==0) 	score_ = 0;
 	pause_ = false;
+	isTutor = false;
 	
 
 }

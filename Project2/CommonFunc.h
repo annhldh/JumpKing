@@ -15,7 +15,7 @@
 #include <fstream>
 
 #define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 730
+#define SCREEN_HEIGHT 900
 
 #define MAX_TILES  100
 #define BLANK_TILE 0

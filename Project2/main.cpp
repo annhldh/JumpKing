@@ -370,9 +370,9 @@ void loadSufaceLayerObject(TTF_Font* font)
         
         if (GAME_MODE == 0)
         {
-            bar_.Render(20, 655, ve, NULL);
+            bar_.Render(20, SCREEN_HEIGHT-80, ve, NULL);
             jump_bar.rect_.w = 10 * king_.jump_forces;
-            jump_bar.Render(25, 660, ve, &jump_bar.rect_);
+            jump_bar.Render(25, SCREEN_HEIGHT-75, ve, &jump_bar.rect_);
         }
     }
     

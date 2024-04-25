@@ -10,6 +10,7 @@ struct Tutorial
 	Object Tutor_button;
 	int frame_ = 0;
 	int y_frame_[700];
+	int frame_val_=20;
 
 	void Display_tutorial(SDL_Renderer* des);
 	void loadTutor(SDL_Renderer* des);

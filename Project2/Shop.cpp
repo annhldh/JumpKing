@@ -211,7 +211,7 @@ void Shop::load_custom(SDL_Renderer* des)
 		tale_demo_rect[i].w = 140 - 20 * i;
 		tale_demo_rect[i].h = 140 - 20 * i;
 		tale_demo_rect[i].x = 700 - 100 - i * 110;
-		tale_demo_rect[i].y = 300 + 288 - 140 + i * 10;
+		tale_demo_rect[i].y = 618+ i * 10;
 	}
 	for (int i = 0; i < 8; i++)
 	{
@@ -220,7 +220,12 @@ void Shop::load_custom(SDL_Renderer* des)
 		map_demo_clip[i].w = 128 * 6;
 		map_demo_clip[i].h = 128;
 	}
-
+	for (int i = 0; i < 4; i++) shop_data_in >>choosed[i];
+	King_hat = choosed[0];
+	king_tale_color = choosed[1];
+	SDL_Cursor* cursorr = SDL_CreateColorCursor(cursor[choosed[2]], 0, 0);
+	SDL_SetCursor(cursorr);
+	tile_style_ = choosed[3];
 }
 
 void Shop::display_demo(SDL_Renderer* des)
@@ -228,20 +233,20 @@ void Shop::display_demo(SDL_Renderer* des)
 
 	if (choosed[1] > 0)for (int i = 0; i < 7; i++)
 	{
-		king_tale_display[choosed[1]].Render(500, 500, des, NULL, 0, 0, &tale_demo_rect[i]);
+		king_tale_display[choosed[1]].Render(500, 670, des, NULL, 0, 0, &tale_demo_rect[i]);
 		
 	}
 
 	demo_rect.h = demo[choosed[0]].rect_.h;
 	demo_rect.y = SCREEN_HEIGHT - 120 - demo[choosed[0]].rect_.h;
 	demo[choosed[0]].Render(600, 200, des, &clip[frame_demo],0,0,&demo_rect);
-	if (loop % 200 == 0)frame_demo++;
+	if (loop % 100 == 0)frame_demo++;
 	if (frame_demo >= 8) frame_demo = 0;
 	
 	
 	for (int i = 0; i < 8; i++)
 	{
-		map_demo[choosed[3]].Render(300, 608, des, &map_demo_clip[frame_demo]);
+		map_demo[choosed[3]].Render(300, 778, des, &map_demo_clip[frame_demo]);
 	}
 
 }
@@ -265,5 +270,6 @@ void Shop:: SaveShopData()
 	{
 		shop_data_out << lock_map[i]<<" ";
 	}
+	for (int i = 0; i < 4; i++) shop_data_out << choosed[i] << " ";
 
 }
