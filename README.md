@@ -38,7 +38,8 @@
 - Có âm thanh di chuyển, nhạc nền, hiệu ứng tuyết rơi,...
 - Game có đầy đủ các nút chức năng hỗ trợ người chơi, như các giao diện cài đặt, tùy chỉnh, hay hướng dẫn cách thao tác ngay trong game.
 - **Jumpking2** chắc chắn sẽ không khiến cho người chơi phải thất vọng với những tính năng, đồ họa độc đáo mới lạ.
-- Video demo :
+- Video demo: https://youtu.be/O4E28KVLTIM
+- Video chơi thử và giới thiệu mã nguồn: https://www.youtube.com/watch?v=DH6zDtqcYL0&t=10s
 ### *Control* 
 
 | Control  |   Player   |
