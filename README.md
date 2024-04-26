@@ -117,7 +117,7 @@
 ![image](Project2/img/demo_game/demo_leaderboard.png)  
 
 -Ở màn cuối, thay vì tìm cửa chuyển màn, người sẽ di chuyển đến vị trí kho báu để mở và nhận được các vật phẩm thành tựu như Chứng thư, hoặc Huy chương.
-![image][(Project2/img/end_mode2.png)
+![image](Project2/img/end_mode2.png)
 ![image](Project2/img/victory_scroll.png) 
 
 -Vật phẩm thành tựu sẽ được trưng bày ở góc trên bên trái giao diện sảnh.
