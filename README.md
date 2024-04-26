@@ -97,12 +97,12 @@
 - Yêu cầu : có C++ compiler.
     1. Tạo một New Folder bất kỳ, dùng terminal: $ git clone https://github.com/annhldh/JumpKing
     2. Vào thư mục vừa tải về, ấn đúp vào file Project2.sln .
-    3. Biên dịch và chạy chương trình đề chơi game.
+    3. Biên dịch với chế độ **x86** và chạy chương trình đề chơi game.
+      
 - *Mọi khó khăn trong phần cài đặt, trong quá trình chơi, vui lòng liên hệ qua 23020004@vnu.edu.vn.*
 
 ## **Play Game**
 - Khi bắt đầu, nhân vật sẽ được xuất hiện trong một giao diện bản đồ ban đầu, gọi là giao diện sảnh.
-- 
 ![image](Project2/img/demo_game/demo1.png)  
 - Tại đây, người chơi có thể lựa chọn những cánh cổng để bắt đầu chơi những chế độ Classic, Rocket, minigame_Rope, hay vào Shop.
 -Mục tiêu của bất cứ chế độ chơi nào là dùng phương thức di chuyển đặc trưng của từng chế độ (nhảy, bay, kéo thả) để di chuyển lên trên, tìm kiếm chìa khóa, cửa qua màn.
@@ -117,15 +117,14 @@
 ![image](Project2/img/demo_game/demo_leaderboard.png)  
 
 -Ở màn cuối, thay vì tìm cửa chuyển màn, người sẽ di chuyển đến vị trí kho báu để mở và nhận được các vật phẩm thành tựu như Chứng thư, hoặc Huy chương.
-![image](Project2/img/end_mode2.png) 
+![image][(Project2/img/end_mode2.png)
 ![image](Project2/img/victory_scroll.png) 
 
 -Vật phẩm thành tựu sẽ được trưng bày ở góc trên bên trái giao diện sảnh.
 
 ![image](Project2/img/demo_game/Archive.png) 
--Bên cạnh đó, trong giao diện shop, người chơi có thể dùng tiền tích lũy 
-được để mua những vật phẩm như mũ, con chỏ chuột, hiệu ứng di chuyển, hay đổi chủ đề map.
 
+-Bên cạnh đó, trong giao diện shop, người chơi có thể dùng tiền tích lũy được để mua những vật phẩm như mũ, con chỏ chuột, hiệu ứng di chuyển, hay đổi chủ đề map.
 ![image](Project2/img/demo_game/demo5.png)  
 
 ## **See also**  
