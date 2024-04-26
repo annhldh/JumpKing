@@ -656,7 +656,7 @@ void King::CheckMap(Map& map_data)
 			}
 		}
 
-		else if (delta_y <= 0)
+		else if (delta_y < 0)
 		{
 			int val1 = map_data.tile[y1][x2];
 			int val2 = map_data.tile[y1][x1];
@@ -702,7 +702,7 @@ void King::CheckMap(Map& map_data)
 			if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2)&& map_data.IsNonCollisionBlock(val3)&& map_data.IsNonCollisionBlock(val4) ))
 			{
 				y_stand = (y1 + 1) * TILE_SIZE;
-				delta_y = 0;
+				delta_y = 10;
 
 			}
 		}
