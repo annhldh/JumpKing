@@ -18,13 +18,13 @@
 - [See also](#see-also)
   * [Các kỹ thuật sử dụng](#các-kỹ-thuật-sử-dụng)
   * [Các nguồn tham khảo](#các-nguồn-tham-khảo)
-  * [Các nguồn tham khảo](#các-nguồn-tham-khảo)
+  * [Mô tả mã nguồn](#mô-tả-mã-nguồn)
 - [Conclusion](#conclusion)
   * [Điều tâm đắc](#điều-tâm-đắc)
   * [Hạn chế](#hạn-chế)
   * [Hướng phát triển](#hướng-phát-triển)
 - [A Special Thanks To](#a-special-thanks-to)
-- [Mức điểm tự đánh giá](#mức-điểm-tự-đánh-giá)
+
 
 ## **Description** 
 ### *Game description and instruction* 
@@ -38,7 +38,8 @@
 - Có âm thanh di chuyển, nhạc nền, hiệu ứng tuyết rơi,...
 - Game có đầy đủ các nút chức năng hỗ trợ người chơi, như các giao diện cài đặt, tùy chỉnh, hay hướng dẫn cách thao tác ngay trong game.
 - **Jumpking2** chắc chắn sẽ không khiến cho người chơi phải thất vọng với những tính năng, đồ họa độc đáo mới lạ.
-- Video demo :
+- Video demo: https://youtu.be/O4E28KVLTIM
+- Video chơi thử và giới thiệu mã nguồn: https://www.youtube.com/watch?v=DH6zDtqcYL0&t=10s
 ### *Control* 
 
 | Control  |   Player   |
@@ -79,7 +80,7 @@
 | ![image](Project2/img/demo_game/ice_breaking.png)   | Breaking Ice| Khối băng non, dễ vỡ khi đứng trên|
 | ![image](Project2/img/demo_game/blue_ice.png) | Blue Ice | Khối băng, trơn trượt|
 | ![image](Project2/img/demo_game/46.png)   | Lazer Statue | Bức tượng phóng tia Lazer |
-| ![image](Project2/img/demo_game/93.png)   | Unexpected Threat | vị trí nối dây co dãn trong chế độ Rope |
+| ![image](Project2/img/demo_game/93.png)   | Rope tile | vị trí nối dây co dãn trong chế độ Rope |
 | ![image](Project2/img/demo_game/25.png)   | Key | Chìa khóa, cần để mở cửa qua màn, mở hòm kho báu |
 | ![image](Project2/img/demo_game/12.png)   | Treasure| Kho báu, chứa phần thưởng cuối cùng của các chế độ chơi|
 | ![image](Project2/img/demo_game/Archive.png)   | Archiverment| Thành tựu đạt được qua việc hoàn thành màn chơi |
@@ -101,13 +102,17 @@
 
 ## **Play Game**
 - Khi bắt đầu, nhân vật sẽ được xuất hiện trong một giao diện bản đồ ban đầu, gọi là giao diện sảnh.
+- 
 ![image](Project2/img/demo_game/demo1.png)  
 - Tại đây, người chơi có thể lựa chọn những cánh cổng để bắt đầu chơi những chế độ Classic, Rocket, minigame_Rope, hay vào Shop.
 -Mục tiêu của bất cứ chế độ chơi nào là dùng phương thức di chuyển đặc trưng của từng chế độ (nhảy, bay, kéo thả) để di chuyển lên trên, tìm kiếm chìa khóa, cửa qua màn.
-![image](Project2/img/demo_game/demo_6.png)  
+
+![image](Project2/img/demo_game/demo6.png)  
 -Đồng thời người chơi phải chú ý tránh né những mối nguy hiểm như Bức tượng Lazer, Băng vỡ, hay không được để rơi quá cao.
+
 ![image](Project2/img/demo_game/demo_lazer.png)  
 -Khi có chìa khóa và đến cửa qua màn, người chơi sẽ được chuyển đến màn tiếp theo, độ cao người chơi đạt được ở map trước sẽ được tích lũy qua các màn chơi của một chế độ, dùng để tính điểm cao trên Leaderboard. Đồng thời giá trị này cũng được chuyển hóa chuyển hóa thành đơn vị tiền sử dụng trong Shop.
+
 ![image](Project2/img/demo_game/height.png)  
 ![image](Project2/img/demo_game/demo_leaderboard.png)  
 
@@ -116,9 +121,11 @@
 ![image](Project2/img/victory_scroll.png) 
 
 -Vật phẩm thành tựu sẽ được trưng bày ở góc trên bên trái giao diện sảnh.
+
 ![image](Project2/img/demo_game/Archive.png) 
 -Bên cạnh đó, trong giao diện shop, người chơi có thể dùng tiền tích lũy 
 được để mua những vật phẩm như mũ, con chỏ chuột, hiệu ứng di chuyển, hay đổi chủ đề map.
+
 ![image](Project2/img/demo_game/demo5.png)  
 
 ## **See also**  
@@ -152,7 +159,21 @@
     + Nhạc nền từ game gốc.
  ...
  -Tự đánh giá: Code có tham khảo, chủ yếu là cách vận dụng kĩ thuật Tile map, cách sử đọc sự kiện, phương pháp xét va chạm giữa nhân vật và map.
- 
+### *Mô tả mã nguồn**
+- main: chứa vòng lặp chính, nơi khởi tạo các đối tượng và logic kết hợp các thành phần để game hoạt động.
+- Object: Class đối tượng cơ bản, bao gồm hình ảnh, kích thước và các hàm hỗ trợ Load và Render hình ảnh của đối tượng.
+- King: Class kế thừa Object, nhân vật chính của game, bao gồm hình ảnh chuyển động, các chỉ số kích thước, vị trí, chỉ số trạng thái,... của nhân vật và các hàm hỗ trợ Load, Render hình ảnh, frames, xử lí tương tác với map và các đối tượng khác.
+- game_map : Class chứa dữ liệu về map của các màn chơi, các hình ảnh của các loại ô map, và các hàm hỗ trợ Load, Render và các hàm hỗ trợ
+- CommonFunc: Chứa các hắng số quan trọng của game như kích thước cửa sổ, kích thước map, trọng lực, Color_key,...
+- Sound : Chứa các hàm quản lí và phát âm thanh: nhạc nền, sự kiện âm thanh,...
+- SFX : Chứa các file âm nhạc và hiệu ứng âm thanh.
+- Shop : Quản lí giao diện shop, chứa các file hình ảnh vật phẩm, chỉ số trạng thái các vật phẩm và các hàm hỗ trợ hiển thị, cập nhật trạng thái.
+- LoadData: Chứa các hàm Load và lưu trữ dữ liệu liên quan khi chạy và tắt game.
+- Setting: Class phục vụ giao diện cài đặt.
+- Victory: Class tạo video khi nhận phần thưởng.
+- Archive: Class quản lí hệ thống các vật phẩm thành tựu.
+- Tutorial: Class 
+  
 ## **Conclusion**
 ### ***Điều tâm đắc***
   - Dự án đầu tiên tự mình hoàn thành một cách hoàn chỉnh.
