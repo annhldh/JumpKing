@@ -193,9 +193,9 @@
 
 ### ***Hướng phát triển***
 - Cập nhật tính năng bảng xếp hạng, sau mỗi lần chơi người chơi sẽ được nhập tên để lưu lại kết quả chơi của mình với tên tùy ý.
-- Thêm các chế độ, minigame mới.
 - Cập nhật các Màn mới, đa dạng hóa hệ thống phần thưởng.
 - Sử dụng kết nối mạng máy tính (LAN, Router,...) kết nối người chơi cạnh tranh với nhau trong bảng xếp hạng chung.
+- Thêm chế độ sáng tạo bản đồ, người chơi có thể sáng tạo các bản đồ từ vật liệu là những ô tile_map có sẵn, có thể chia sẻ cho những người chơi khác.
   
 # **A Special Thanks To**
 - **TS. Lê Đức Trọng** - Người hướng dẫn, Giảng viên.
