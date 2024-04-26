@@ -66,7 +66,7 @@
 ![](Project2/img/demo_game/demo2.png)
 ![](Project2/img/demo_game/demo3.png)
 ![](Project2/img/demo_game/demo4.png)
-![](Project2/img/demo_game/demo5.png)
+
 
 
 ## **Objects In game**
@@ -95,25 +95,46 @@
 ## **Setup**
 - Yêu cầu : có C++ compiler.
     1. Tạo một New Folder bất kỳ, dùng terminal: $ git clone https://github.com/annhldh/JumpKing
-    2. Vào thư mục vừa tải về, vào thư mục Debug/.
-    3. Ấn đúp vào Project2.exe.
+    2. Vào thư mục vừa tải về, ấn đúp vào file Project2.sln .
+    3. Biên dịch và chạy chương trình đề chơi game.
 - *Mọi khó khăn trong phần cài đặt, trong quá trình chơi, vui lòng liên hệ qua 23020004@vnu.edu.vn.*
+
+## **Play Game**
+- Khi bắt đầu, nhân vật sẽ được xuất hiện trong một giao diện bản đồ ban đầu, gọi là giao diện sảnh.
+![image](Project2/img/demo_game/demo1.png)  
+- Tại đây, người chơi có thể lựa chọn những cánh cổng để bắt đầu chơi những chế độ Classic, Rocket, minigame_Rope, hay vào Shop.
+-Mục tiêu của bất cứ chế độ chơi nào là dùng phương thức di chuyển đặc trưng của từng chế độ (nhảy, bay, kéo thả) để di chuyển lên trên, tìm kiếm chìa khóa, cửa qua màn.
+![image](Project2/img/demo_game/demo_6.png)  
+-Đồng thời người chơi phải chú ý tránh né những mối nguy hiểm như Bức tượng Lazer, Băng vỡ, hay không được để rơi quá cao.
+![image](Project2/img/demo_game/demo_lazer.png)  
+-Khi có chìa khóa và đến cửa qua màn, người chơi sẽ được chuyển đến màn tiếp theo, độ cao người chơi đạt được ở map trước sẽ được tích lũy qua các màn chơi của một chế độ, dùng để tính điểm cao trên Leaderboard. Đồng thời giá trị này cũng được chuyển hóa chuyển hóa thành đơn vị tiền sử dụng trong Shop.
+![image](Project2/img/demo_game/height.png)  
+![image](Project2/img/demo_game/demo_leaderboard.png)  
+
+-Ở màn cuối, thay vì tìm cửa chuyển màn, người sẽ di chuyển đến vị trí kho báu để mở và nhận được các vật phẩm thành tựu như Chứng thư, hoặc Huy chương.
+![image](Project2/img/end_mode2.png) 
+![image](Project2/img/victory_scroll.png) 
+
+-Vật phẩm thành tựu sẽ được trưng bày ở góc trên bên trái giao diện sảnh.
+![image](Project2/img/demo_game/Archive.png) 
+-Bên cạnh đó, trong giao diện shop, người chơi có thể dùng tiền tích lũy 
+được để mua những vật phẩm như mũ, con chỏ chuột, hiệu ứng di chuyển, hay đổi chủ đề map.
+![image](Project2/img/demo_game/demo5.png)  
 
 ## **See also**  
 ### *Các kỹ thuật sử dụng*  
 - Thư viện SDL2.
 - Kĩ thuật Tile map.
-- Sử dụng nhiều class, vector, tách file, con trỏ, xâu chuỗi,biến, vòng lặp, cấu trúc rẽ nhánh, mảng, ...
 - Tạo nhiều đối tượng với từng class riêng: Nhân vật, bản đồ, Tutorial, Shop, Phần thưởng ...
 - Có thể lưu lại điểm cao nhất sau mỗi lần chơi nhờ đọc và ghi file.
+- Sử dụng nhiều class, struct, con trỏ, xâu chuỗi, biến, vòng lặp, cấu trúc rẽ nhánh,...
 - Xử lý thời gian, thao tác chuột và bàn phím, âm thanh, hình ảnh, chữ.
-- Tạo menu và các nút di chuyển giữa các menu.
-- Tạo Option khi chơi : pause game, play game, restart game, exit game, điều chỉnh âm lượng, hiệu ứng,..
-- Sử dụng photoshop để edit các ảnh dựa vào một số mẫu ảnh từ các nguồn khác.
-- Sử dụng kiến thức toán học, vật lí để tính toán va chạm của nhân vật và map, chuyển động trên khồng của nhân vật.
+- Tạo Option khi chơi : menu, setting, pause game, play game, restart game, exit game, điều chỉnh âm lượng và hiệu ứng,..
+- Sử dụng Photoshop và MS.Paint để edit các ảnh dựa trên các nguồn khác nhau.
+- Sử dụng kiến thức toán học, vật lí để tính toán va chạm của nhân vật và map, tính toán chuyển động trên không của nhân vật.
 
 ### *Các nguồn tham khảo**
-- Cách sử dụng, cài đặt SDL2.0 trên C++: tham khảo từ các bạn, kênh web **Phattrienphanmem123az.com**.
+- Cách sử dụng, cài đặt SDL2.0 trên C++:kênh web **Phattrienphanmem123az.com**.
 - Cách sử dụng, thư viện SDL2.0, quản lý chương trình:
     + Các buổi học lý thuyết của **TS.Lê Đức Trọng**.
     + Các buổi học thực hành của **CN. Trần Trường Thủy**.
@@ -126,34 +147,34 @@
   
     + https://pixabay.com/sound-effects/search/wav/
     #Free Wav Sound Effects Download
-    + https://www.freesoundeffects.com/free-sounds/explosion-10070/
+    + https://www.freesoundeffects.com/free-sounds/
     #Free Explosion Sound Effects
     + Nhạc nền từ game gốc.
  ...
+ -Tự đánh giá: Code có tham khảo, chủ yếu là cách vận dụng kĩ thuật Tile map, cách sử đọc sự kiện, phương pháp xét va chạm giữa nhân vật và map.
+ 
 ## **Conclusion**
 ### ***Điều tâm đắc***
-  - Dự án này hoàn toàn là do em tự làm, không đi sao chép ở bất kì đâu.
+  - Dự án đầu tiên tự mình hoàn thành một cách hoàn chỉnh.
+  
   - Hiểu được mô hình phát triển 1 phần mềm kiểu thác nước: Phân tích, thiết kế, lập trình, kiểm thử, vận hành và bảo trì.
-  - Hiểu được cách dùng github.
-  - Hiểu sơ qua một số khía cạnh của lập trình hướng đối tượng: kế thừa, đa hình,...
-  - Sau khi làm dự án này, em thấy mình đã cải thiện được nhiều kỹ năng trong việc tư duy và viết code, khả năng lên ý tưởng, sắp xếp chia tách file và các kỹ năng photoshop.
   - Học được cách setup môi trường, sử dụng thư viện ngoài (SDL2, SDL2_ttf, SDL2_mixer, SDL2_image, ...)
-  - Cải thiện kỹ năng sử dụng class (constructor, destructor, member function,...), sử dụng các các loại biến, hàm, con trỏ, hằng, define,...  
+  - Hiểu được cách dùng github.
+  - Cải thiện kỹ năng sử dụng class, sử dụng các các loại biến, hàm, con trỏ, hằng, define,...  
   - Học được kỹ thuật tile map, duyệt mảng, lưu trữ, nhập xuất file, giải phóng bộ nhớ động.
+  - Hiểu sơ qua một số khía cạnh của lập trình hướng đối tượng: kế thừa, đa hình,...
+  - Sau khi hoàn thành dự án này, em nhận thấy mình đã phát triển đáng kể các kỹ năng trong tư duy và viết code, cũng như khả năng lên ý tưởng, tổ chức và phân loại file, cùng với kỹ năng sử dụng Photoshop.
+
 
     
 ### ***Hạn chế*** 
-  - Một số đối tượng trong chương trình chưa được giải phóng hợp lí khi kết thúc chương trình
-  - Một số phần code chưa trong sáng.
+  - Một số đối tượng trong chương trình chưa được giải phóng hợp lí khi kết thúc chương trình.
+  - Một số phần code chưa trong sáng, còn chưa được tổ chức mạch lạc.
 
 ### ***Hướng phát triển***
 - Cập nhật tính năng bảng xếp hạng, sau mỗi lần chơi người chơi sẽ được nhập tên để lưu lại kết quả chơi của mình với tên tùy ý.
 - Thêm các chế độ, minigame mới.
 - Cập nhật các Màn mới, đa dạng hóa hệ thống phần thưởng.
-- Áp dụng hệ thống sử dụng tiền và nạp tiền:
-    + Thêm cửa hàng để mua trang phục và vật phẩm bổ trợ.
-    + Sử dụng tiền thưởng kiếm được từ việc nạp tiền hoặc đạt được lúc chơi game.
-    + Người chơi nạp tiền vào game, số tiền sẽ chuyển vào tài khoản nhà phát hành.
 - Sử dụng kết nối mạng máy tính (LAN, Router,...) kết nối người chơi cạnh tranh với nhau trong bảng xếp hạng chung.
   
 # **A Special Thanks To**
@@ -161,5 +182,5 @@
 - **CN. Trần Trường Thủy** - Người hướng dẫn, Giảng viên.
 - **SV Nguyễn Hoàng Dương** - Cố vấn.
 
-# *Mức điểm tự đánh giá*
+
 

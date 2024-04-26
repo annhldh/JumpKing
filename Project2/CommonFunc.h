@@ -54,7 +54,7 @@ const int SCREEN_BPP = 32;
 	char* file_name_ = nam;
 	int Timer_map[MAX_MAP_Y][MAX_MAP_X] = {};
 	
-	std::vector <int> non_collision_block = { 0,4,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,48,49,53,54,55,56,81,82,83,84,85,86,87,88,90,91,92,93};
+	std::vector <int> non_collision_block = {0,4,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,48,49,53,54,55,56,81,82,83,84,85,86,87,88,90,91,92,93};
 	bool IsNonCollisionBlock(int val);
 	std::vector <int> Collection_block = { 4,25 };
 	std::vector<std::pair<int,int>> Ice_block = {};

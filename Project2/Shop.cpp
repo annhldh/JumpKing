@@ -237,7 +237,7 @@ void Shop::load_custom(SDL_Renderer* des)
 		map_demo_clip[i].w = 128 * 6;
 		map_demo_clip[i].h = 128;
 	}
-	for (int i = 0; i < 4; i++) shop_data_in >>choosed[i];
+	for (int i = 0; i < 4; i++) shop_data_in >> choosed[i];
 	King_hat = choosed[0];
 	king_tale_color = choosed[1];
 	SDL_Cursor* cursorr = SDL_CreateColorCursor(cursor[choosed[2]], 0, 0);

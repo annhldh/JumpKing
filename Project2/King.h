@@ -108,7 +108,7 @@ public:
 	int energy = 3;
 	int fly_force=0;
 	
-
+	//MODE 3
 	bool connect_rope = false;
 	bool pull = false;
 

@@ -2,6 +2,7 @@
 #include "CommonFunc.h"
 #include "Sound.h"
 #include"SFX.h";
+
  void display_sound(Mix_Chunk* music)
 {
     if (!music) {

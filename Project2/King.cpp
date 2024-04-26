@@ -45,12 +45,12 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 	if (events.type == SDL_KEYDOWN )
 	{
 		
-		if (events.key.keysym.sym == SDLK_r)
-		{
-			key_ = 1;
-			x_stand == 1160;
-			y_stand = 681;
-		}
+		//if (events.key.keysym.sym == SDLK_r)
+		//{
+		//	key_ = 1;
+		//	x_stand == 1160;
+		//	y_stand = 681;
+		//}
 		if (on_ground == true)
 		{
 			if (events.key.keysym.sym == SDLK_UP)  if (on_ground == true && delta_y == 0 && delta_x == 0)
@@ -216,7 +216,7 @@ void King::MoveAction(Map &map)
 {
    
 
-    if (Action[JUMP] == 1&& connect_rope==false)
+    if (Action[JUMP] == 1 && connect_rope==false)
     {
 			if (jump_forces >= MAX_JUMP_FORCE) val = -1;
 			else if (jump_forces <= 0) val = 1;
@@ -612,7 +612,6 @@ void King::CheckMap(Map& map_data)
 					Action[FACE_DOWN] = true;
 					Life--;
 					display_sound(fall);
-			
 				}
 				lost_height = y_stand;
 				if ((val1 == 11) || (val2 == 11) || (val3 == 11) || (val4 == 11) )
@@ -710,7 +709,6 @@ void King::CheckMap(Map& map_data)
 	}
 
 
-
 	Get_max_height(); 
 	if(King_hat==1) y1 += 1;
 	int val1 = map_data.tile[y1][x1];
@@ -736,7 +734,7 @@ void King::CheckMap(Map& map_data)
 
 	//}
 
-	if ((val1 >= 26 && val1 <= 45) && (val2 >= 26 && val2 <= 45))
+	if ((val1 >= 26 && val1 <= 45) && (val2 >= 26 && val2 <= 45) && key_>0)
 	{
 		stage_++;
 		key_ = 0;
@@ -1060,7 +1058,7 @@ void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &ba
 	{
 		GAME_MODE = 2;
 	}
-	if(stage==0) 	score_ = 0;
+	if(stage==0) score_ = 0;
 	pause_ = false;
 	isTutor = false;
 	
