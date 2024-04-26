@@ -5,6 +5,8 @@
 #include "Setting.h"
 #include "King.h"
 #include "CommonFunc.h"
+#include "SFX.h";
+#include "Sound.h"
 
 class Shop
 {
@@ -29,12 +31,16 @@ public:
 	int map_cost[2] = { 0,4000 };
 
 	int frame_demo = 0;
+	int frame_lost_money_ = 0;
 	SDL_Rect clip[8];
 	Object demo[HAT_COUNT];
 	Object map_demo[2];
 	Object map_demo_block[2];
 	SDL_Rect tale_demo_rect[7];
 	SDL_Rect map_demo_clip[8];
+	int lost_money_y[8] = { 0,-2,-4,-6,-8,-10,-12,-14 };
+	bool is_play_lost_money_ = 0;
+	int lost_money = 0;
 
 	Object lock;
 	Object Back;
@@ -46,11 +52,13 @@ public:
 	void Shop_act(SDL_Event* events);
 	void load_custom(SDL_Renderer* des);
 	void display_demo(SDL_Renderer* des);
+	void display_lost_money(SDL_Renderer* des, int money);
 	void LoadShopData();
 	void SaveShopData();
 
 
 	TTF_Font* fonte;
+	TTF_Font* font_lost ;
 	std::string exp_str;
 	Object exp_icon;
 

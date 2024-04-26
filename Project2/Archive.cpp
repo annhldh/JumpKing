@@ -16,7 +16,7 @@ void Archive::LoadArchiveImg(SDL_Renderer* des)
 		name2[21] = i + '0';
 		archive_shadow[i].LoadImg(name2, des);
 	}
-	archive_data_load.open("Archive_data.txt");
+	archive_data_load.open("Data//Archive_data.txt");
 	for (int i = 0; i < 3; i++)
 	{
 		archive_data_load >> owned[i];
@@ -43,7 +43,7 @@ void Archive::DisplayAchive(SDL_Renderer* des)
 
 void Archive::SaveArchiveData()
 {
-	archive_data_save.open("Archive_data.txt", std::ios::trunc);
+	archive_data_save.open("Data//Archive_data.txt", std::ios::trunc);
 	for (int i = 0; i < 3; i++)
 	{
 		archive_data_save << owned[i] << " ";
@@ -53,5 +53,4 @@ void Archive::SaveArchiveData()
 void Archive::UpdateArchive()
 {
 	if (isVictory == true) owned[GAME_MODE] = true;
-	std::cout << "UPDATED!!! \n";
 }

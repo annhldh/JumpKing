@@ -18,6 +18,7 @@
 - [See also](#see-also)
   * [Các kỹ thuật sử dụng](#các-kỹ-thuật-sử-dụng)
   * [Các nguồn tham khảo](#các-nguồn-tham-khảo)
+  * [Các nguồn tham khảo](#các-nguồn-tham-khảo)
 - [Conclusion](#conclusion)
   * [Điều tâm đắc](#điều-tâm-đắc)
   * [Hạn chế](#hạn-chế)

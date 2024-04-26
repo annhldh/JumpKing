@@ -9,6 +9,7 @@
 #include "Victory.h"
 #include "Tutorial.h"
 #include "Archive.h"
+#include "LoadData.h"
 #include < algorithm>
 
 
@@ -97,18 +98,20 @@ std::ifstream money;
 std::ofstream money2;
 
 
+
+
 SDL_Rect b_r = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 SDL_Event e;
 
 void mouseEvent();
-void loadSFX();
+//void loadSFX();
 void loadsnow();
-void loadLeaderBoard();
+
 void loadSufaceLayerObject( TTF_Font* font);
 void BackgroundRender();
 void LeaderBoard();
-void LoadMoney();
-void SaveMoney();
+void SaveData();
+
 
 
 void loadJump_bar()
@@ -126,7 +129,7 @@ void PlayDefault()
     game_map.LoadMap(nameMap);
     game_map.LoadTiles(ve);
     display_music_theme(music_theme[0]);
-    LoadMoney();
+
 }
 
 
@@ -140,12 +143,13 @@ int main(int argc, char* args[]) {
         return 2;
     }
   
-    font = TTF_OpenFont("Cutout.ttf", 40);
+    font = TTF_OpenFont("font//Cutout.ttf", 40);
     loadsnow();
     LoadImageFile();
-    loadSFX();
+    LoadSFX();
     loadJump_bar();
-    loadLeaderBoard();
+    loadLeaderBoard(board,bo);
+    LoadMoney(money);
     PlayDefault();
     shop_.load_custom(ve);
     SDL_Cursor* cursor = SDL_CreateColorCursor(Cursor_d, 0, 0);
@@ -201,10 +205,10 @@ int main(int argc, char* args[]) {
         }
         else if (OnShop_ == true)
         {
-            
             shop_.display_Shop(ve);
             renderText(ve, font, shop_.exp_str, textColor, 100, 50);
             SDL_RenderPresent(ve);
+            ;
         }
         else if (isVictory == true)
         {
@@ -249,8 +253,7 @@ int main(int argc, char* args[]) {
     }
     
 
-    SaveMoney();
-    shop_.SaveShopData();
+    SaveData();
     close();
     return 0;
 }
@@ -292,24 +295,6 @@ void LoadImageFile()
     Archivement_.LoadArchiveImg(ve);
 }
 
-void loadSFX()
-{
-    fall = Mix_LoadWAV("sound//fall.mp3");
-    walking = Mix_LoadWAV("sound//walking.mp3");
-    jumping = Mix_LoadWAV("sound//jumping.mp3");
-    landing = Mix_LoadWAV("sound//landing.mp3");
-    icebreaking = Mix_LoadWAV("sound//icebreaking.mp3");
-    tap = Mix_LoadWAV ("sound//tap.mp3");
-    door_open = Mix_LoadWAV("sound//door_open.mp3");
-    bird = Mix_LoadWAV("sound//bird.mp3");
-
-    music_theme[0] = Mix_LoadMUS("sound//theme2.mp3");
-    music_theme[1] = Mix_LoadMUS("sound//theme2.mp3");
-    music_theme[2] = Mix_LoadMUS("sound//theme2.mp3");
-    music_theme[3] = Mix_LoadMUS("sound//theme2.mp3");
-    music_rick = Mix_LoadMUS("sound//rick.mp3");
-
-}
 
 void loadsnow()
 {
@@ -328,45 +313,7 @@ void loadsnow()
 
 }
 
-void loadLeaderBoard()
-{
 
-    board.open("board.txt");
-    if (!board.is_open()) {
-
-        std::cout << "Unable to open file for writing.." << std::endl;
-    }
-
-    char a;
-    for (int i = 1; i < 11; i++)
-    {
-
-        getline(board, bo[i].second);
-        board >> bo[i].first;
-        board.ignore();
-
-
-    }
-
-    board.close();
-
-}
-
-void LoadMoney()
-{
-    money.open("money.txt");
-    int mon;
-    money >> mon;
-    Achive_ = mon;
-    money.close();
-}
-
-void SaveMoney()
-{
-    money2.open("money.txt", std::ios::trunc);
-    money2 << Achive_;
-    money2.close();
-}
 
 void loadSufaceLayerObject(TTF_Font* font)
 {
@@ -406,7 +353,7 @@ void BackgroundRender()
 void LeaderBoard()
 {
 
-    board2.open("board.txt", std::ios::trunc);
+    board2.open("Data//board.txt", std::ios::trunc);
     bo[0].first = king_.score_ + king_.max_height;
     bo[0].second = "Player";
     sort(bo, bo + 11);
@@ -421,13 +368,12 @@ void LeaderBoard()
     GAME_MODE = 0;
     GRAVITY = 2;
     MAX_GRAVITY = 32;
-    king_.max_height = 0;
     board2.close();
 }
 
 void mouseEvent()
 {
-    display_sound(tap);
+    if (OnShop_ == false) display_sound(tap);
     if (mouse_x >= 860 && mouse_x <= 931 && mouse_y >= 20 && mouse_y <= 100)
     {
         pause_ = true;
@@ -454,9 +400,8 @@ void mouseEvent()
             {
                 if (volume >= 16)
                 {
-                    Mix_VolumeMusic(volume);
                     volume -= 16;
-
+                    Mix_VolumeMusic(volume);
 
                 }
             }
@@ -501,4 +446,11 @@ void mouseEvent()
     {
         shop_.Shop_act(&e);
     }
+}
+
+void SaveData()
+{
+    SaveMoney(money2);
+    shop_.SaveShopData();
+    Archivement_.SaveArchiveData();
 }

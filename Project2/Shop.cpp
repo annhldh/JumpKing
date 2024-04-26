@@ -55,6 +55,12 @@ void Shop::display_Shop(SDL_Renderer* des)
 	display_demo(des);
 	exp_str = std::to_string(Achive_);
 	exp_icon.Render(30, 40, des, NULL);
+	if (is_play_lost_money_ == true)
+	{
+		display_lost_money(des, -1*lost_money);
+		display_sound(cashing);
+	}
+
 	
 }
 
@@ -72,36 +78,42 @@ void Shop::Shop_act(SDL_Event* events)
 				{
 					Achive_ -= hat_cost[i];
 					lock_hat[i] = true;
+					is_play_lost_money_ = true;
+					lost_money = hat_cost[i];
 				}
-				if(lock_hat[i] == true)choosed[0] = i;
+				if (lock_hat[i] == true)choosed[0] = i;
 				King_hat = i;
-			}		
+			}
 		}
 		for (int i = 0; i < COLOR_COUNT; i++)
 		{
 
-			if (mouse_x >= 90 + 100 * i && mouse_x <= 160 + 100 * i && mouse_y >= 200 && mouse_y <= 250) 
+			if (mouse_x >= 90 + 100 * i && mouse_x <= 160 + 100 * i && mouse_y >= 200 && mouse_y <= 250)
 			{
 				if (Achive_ >= tale_cost[i] && lock_tale[i] == false)
 				{
 					Achive_ -= tale_cost[i];
 					lock_tale[i] = true;
+					is_play_lost_money_ = true;
+					lost_money = tale_cost[i];
 				}
-				if(lock_tale[i] == true)choosed[1] = i;
+				if (lock_tale[i] == true)choosed[1] = i;
 				king_tale_color = i;
 			}
-			
+
 
 		}
 		for (int i = 0; i < CURSOR_COUNT; i++)
 		{
 
-			if (mouse_x >= 90 + 100 * i && mouse_x <= 160 + 100 * i && mouse_y >= 300 && mouse_y <= 350) 
+			if (mouse_x >= 90 + 100 * i && mouse_x <= 160 + 100 * i && mouse_y >= 300 && mouse_y <= 350)
 			{
 				if (Achive_ >= cursor_cost[i] && lock_cursor[i] == false)
 				{
 					Achive_ -= cursor_cost[i];
 					lock_cursor[i] = true;
+					is_play_lost_money_ = true;
+					lost_money = cursor_cost[i];
 				}
 				if (lock_cursor[i] == true)
 				{
@@ -115,12 +127,15 @@ void Shop::Shop_act(SDL_Event* events)
 		for (int i = 0; i < 2; i++)
 		{
 
-			if (mouse_x >= 90 + 100 * i && mouse_x <= 160 + 100 * i && mouse_y >= 390 && mouse_y <= 450) 
+			if (mouse_x >= 90 + 100 * i && mouse_x <= 160 + 100 * i && mouse_y >= 390 && mouse_y <= 450)
 			{
 				if (Achive_ >= map_cost[i] && lock_map[i] == false)
 				{
 					Achive_ -= map_cost[i];
 					lock_map[i] = true;
+					is_play_lost_money_ = true;
+					lost_money = map_cost[i];
+
 				}
 				if (lock_map[i] == true)
 				{
@@ -139,6 +154,7 @@ void Shop::Shop_act(SDL_Event* events)
 		}
 	}
 }
+	
 
 void Shop::load_custom(SDL_Renderer* des)
 {
@@ -148,8 +164,9 @@ void Shop::load_custom(SDL_Renderer* des)
 	Back.LoadImg("img//Shop//Back.png", des);
 	exp_icon.LoadImg("img//EXP.png",des);
 	choose.LoadImg("img//Shop//choose.png", des);
-	fonte = TTF_OpenFont("Cutout.ttf", 20);
-	shop_data_in.open("Shop_data.txt");
+	fonte = TTF_OpenFont("font//Cutout.ttf", 20);
+	font_lost = TTF_OpenFont("font//Arial.ttf", 30);
+	shop_data_in.open("Data//Shop_data.txt");
 
 	char nam[] = "img//Shop//hat_n.png";
 	for (int i = 0; i < HAT_COUNT; i++)
@@ -253,7 +270,7 @@ void Shop::display_demo(SDL_Renderer* des)
 
 void Shop:: SaveShopData()
 {
-	shop_data_out.open("Shop_data.txt",std::ios::trunc);
+	shop_data_out.open("Data//Shop_data.txt",std::ios::trunc);
 	for (int i = 0; i < HAT_COUNT; i++)
 	{
 		shop_data_out << lock_hat[i]<<" ";
@@ -272,4 +289,19 @@ void Shop:: SaveShopData()
 	}
 	for (int i = 0; i < 4; i++) shop_data_out << choosed[i] << " ";
 
+}
+
+void Shop::display_lost_money(SDL_Renderer* des,int money)
+{
+	std::string lost = std::to_string(money);
+	renderText(des, font_lost, lost, red, mouse_x +50 ,mouse_y -50 -frame_lost_money_*5 );
+	if (frame_lost_money_ < 7)
+	{
+		if (loop % 35 == 0)frame_lost_money_++;
+	}
+	else
+	{
+		is_play_lost_money_ = false;
+		frame_lost_money_ = 0;
+	}
 }

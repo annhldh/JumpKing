@@ -3,10 +3,16 @@
 #include "SFX.h"
 void Victory:: Display_Congrats(SDL_Renderer* des)
 {
+	if (music_playing == stage_val)
+	{
+		Mix_HaltMusic();
+		Mix_PlayMusic(music_victory, -1);
+		music_playing = -1;
+	}
 	if (GAME_MODE == 2)
 	{
 		Medal_.Render(0, 0, des, NULL, 0, 0, &medal_rect[frame_]);
-		if (frame_ < 52 && loop%50==0)frame_++;
+		if (frame_ < 52 && loop%100==0)frame_++;
 		is_queue = false;
 
 	}
@@ -43,6 +49,9 @@ void Victory::back(SDL_Event events)
 			frame_scroll = 0;
 			isVictory = false;
 			is_queue = true;
+			Mix_HaltMusic();
+			Mix_PlayMusic(music_theme[stage_val],-1);
+			music_playing = stage_val;
 		}
 	}
 }

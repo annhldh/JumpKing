@@ -13,9 +13,11 @@ extern Mix_Chunk* icebreaking;
 extern Mix_Chunk* tap;
 extern Mix_Chunk* door_open;
 extern Mix_Chunk* bird;
+extern Mix_Chunk* cashing;
 
 extern Mix_Music* music_theme[4];
 extern Mix_Music* music_rick;
+extern Mix_Music* music_victory;
 
 extern int volume;
 extern int GAME_MODE;
@@ -38,4 +40,10 @@ extern int footprint_distance;
 extern int tile_style_;
 extern bool isVictory;
 extern bool isTutor;
+
+extern int music_playing;
+
+extern SDL_Color red ;
+
+
 #endif // !SFX_H_

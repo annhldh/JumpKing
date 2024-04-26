@@ -8,10 +8,12 @@
  Mix_Chunk* icebreaking = nullptr;
  Mix_Chunk* door_open = nullptr;
  Mix_Chunk* bird=nullptr;
+ Mix_Chunk* cashing = nullptr;
 
 
  Mix_Music* music_theme[4];
  Mix_Music* music_rick;
+ Mix_Music* music_victory;
  int volume = 48;
  int GAME_MODE = 0;
  Object rope ;
@@ -33,5 +35,6 @@
  bool isVictory = false;
  bool isTutor = false;
 
-
- extern int stage_val = 0;
+ int music_playing=0;
+int stage_val = 0;
+SDL_Color red = { 255,15,15};

@@ -156,6 +156,7 @@ void King::Control(SDL_Event events, SDL_Renderer* des, Map& map)
 			if (hori > 0) turn = LEFT;
 			else turn = RIGHT;
 			hori = abs(hori)*0.7;
+			display_sound(jumping);
 		}
 	}
 	int m_x1, m_y1;
@@ -1044,12 +1045,13 @@ void King::loadStage(int stage, GameMap& game_map, SDL_Renderer* des, Object &ba
 {
 	Achive_ += max_height;
 	score_ += max_height;
-	std::cout << score_ << '\n';;
+	max_height = 0;
 	set_begin();
 	stage_ = stage;
 	char nameMap2[] = "map//map03.dat";
 	nameMap2[9] = char(stage+'0');
 	display_music_theme(music_theme[stage]);
+	music_playing = stage;
 	back_ground_.LoadImg("img//background" + std::to_string(stage) + ".png", des);
 	hori = 8;
 	game_map.time =0;
