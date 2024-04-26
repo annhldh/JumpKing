@@ -104,7 +104,7 @@
 ![image](Project2/img/demo_game/demo1.png)  
 - Tại đây, người chơi có thể lựa chọn những cánh cổng để bắt đầu chơi những chế độ Classic, Rocket, minigame_Rope, hay vào Shop.
 -Mục tiêu của bất cứ chế độ chơi nào là dùng phương thức di chuyển đặc trưng của từng chế độ (nhảy, bay, kéo thả) để di chuyển lên trên, tìm kiếm chìa khóa, cửa qua màn.
-![image](Project2/img/demo_game/demo_6.png)  
+![image](Project2/img/demo_game/demo6.png)  
 -Đồng thời người chơi phải chú ý tránh né những mối nguy hiểm như Bức tượng Lazer, Băng vỡ, hay không được để rơi quá cao.
 ![image](Project2/img/demo_game/demo_lazer.png)  
 -Khi có chìa khóa và đến cửa qua màn, người chơi sẽ được chuyển đến màn tiếp theo, độ cao người chơi đạt được ở map trước sẽ được tích lũy qua các màn chơi của một chế độ, dùng để tính điểm cao trên Leaderboard. Đồng thời giá trị này cũng được chuyển hóa chuyển hóa thành đơn vị tiền sử dụng trong Shop.
