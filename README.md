@@ -79,7 +79,7 @@
 | ![image](Project2/img/demo_game/ice_breaking.png)   | Breaking Ice| Khối băng non, dễ vỡ khi đứng trên|
 | ![image](Project2/img/demo_game/blue_ice.png) | Blue Ice | Khối băng, trơn trượt|
 | ![image](Project2/img/demo_game/46.png)   | Lazer Statue | Bức tượng phóng tia Lazer |
-| ![image](Project2/img/demo_game/93.png)   | Unexpected Threat | vị trí nối dây co dãn trong chế độ Rope |
+| ![image](Project2/img/demo_game/93.png)   | Rope tile | vị trí nối dây co dãn trong chế độ Rope |
 | ![image](Project2/img/demo_game/25.png)   | Key | Chìa khóa, cần để mở cửa qua màn, mở hòm kho báu |
 | ![image](Project2/img/demo_game/12.png)   | Treasure| Kho báu, chứa phần thưởng cuối cùng của các chế độ chơi|
 | ![image](Project2/img/demo_game/Archive.png)   | Archiverment| Thành tựu đạt được qua việc hoàn thành màn chơi |
