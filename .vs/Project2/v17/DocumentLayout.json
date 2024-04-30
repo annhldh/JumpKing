@@ -177,8 +177,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-04-22T14:36:20.946Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -191,8 +190,7 @@
               "ViewState": "AQIAANoAAAAAAAAAAAAAANUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-02T12:29:24.918Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -299,7 +297,7 @@
               "RelativeDocumentMoniker": "Project2\\King.cpp",
               "ToolTip": "D:\\JumpKing\\Project2\\King.cpp",
               "RelativeToolTip": "Project2\\King.cpp",
-              "ViewState": "AQIAAKUBAAAAAAAAAAAQwMACAAAOAAAA",
+              "ViewState": "AQIAAMwBAAAAAAAAAAAQwOkBAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-06T01:57:45.17Z",
               "EditorCaption": ""
@@ -326,8 +324,7 @@
               "RelativeToolTip": "Project2\\CommonFunc.h",
               "ViewState": "AQIAADYAAAAAAAAAAAAAAD4AAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-06T12:45:42.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-06T12:45:42.927Z"
             },
             {
               "$type": "Document",
@@ -375,8 +372,7 @@
               "RelativeToolTip": "Project2\\game_map.cpp",
               "ViewState": "AQIAAH0AAAAAAAAAAAAAAHoAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-06T07:11:28.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-06T07:11:28.907Z"
             },
             {
               "$type": "Document",

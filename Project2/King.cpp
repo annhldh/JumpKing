@@ -491,6 +491,12 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y2][x1] = 0;
 				money_++;
 			}
+			if (val1 == 48 || val2 == 48 || val3 == 48 || val4 == 48)
+			{
+				Life--;
+				isDiebyLazer = true;
+			}
+
 			else if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2) && map_data.IsNonCollisionBlock(val3) && map_data.IsNonCollisionBlock(val4)))
 			{
 				x_stand = (x1+1 ) * TILE_SIZE+8 ;
@@ -698,6 +704,12 @@ void King::CheckMap(Map& map_data)
 				map_data.tile[y1][x4] = 0;
 				key_++;
 			}
+			if (val1 == 48 || val2 == 48 || val3 == 48 || val4 == 48)
+			{
+				Life--;
+				isDiebyLazer = true;
+			}
+
 
 			if (!(map_data.IsNonCollisionBlock(val1) && map_data.IsNonCollisionBlock(val2)&& map_data.IsNonCollisionBlock(val3)&& map_data.IsNonCollisionBlock(val4) ))
 			{
