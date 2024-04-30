@@ -105,7 +105,7 @@
 - Khi bắt đầu, nhân vật sẽ được xuất hiện trong một giao diện bản đồ ban đầu, gọi là giao diện sảnh.
 ![image](Project2/img/demo_game/demo1.png)  
 - Tại đây, người chơi có thể lựa chọn những cánh cổng để bắt đầu chơi những chế độ Classic, Rocket, minigame_Rope, hay vào Shop.
--Mục tiêu của bất cứ chế độ chơi nào là dùng phương thức di chuyển đặc trưng của từng chế độ (nhảy, bay, kéo thả) để di chuyển lên trên, tìm kiếm chìa khóa, cửa qua màn.
+- Mục tiêu của bất cứ chế độ chơi nào là dùng phương thức di chuyển đặc trưng của từng chế độ (nhảy, bay, kéo thả) để di chuyển lên trên, tìm kiếm chìa khóa, cửa qua màn.
 
 ![image](Project2/img/demo_game/demo6.png)  
 -Đồng thời người chơi phải chú ý tránh né những mối nguy hiểm như Bức tượng Lazer, Băng vỡ, hay không được để rơi quá cao.
@@ -157,7 +157,7 @@
     #Free Explosion Sound Effects
     + Nhạc nền từ game gốc.
  ...
- -Tự đánh giá: Code có tham khảo, chủ yếu là cách vận dụng kĩ thuật Tile map, cách sử đọc sự kiện, phương pháp xét va chạm giữa nhân vật và map.
+ - Tự đánh giá: Code có tham khảo, chủ yếu là cách vận dụng kĩ thuật Tile map, cách sử đọc sự kiện, phương pháp xét va chạm giữa nhân vật và map.
 ### *Mô tả mã nguồn**
 - main: chứa vòng lặp chính, nơi khởi tạo các đối tượng và logic kết hợp các thành phần để game hoạt động.
 - Object: Class đối tượng cơ bản, bao gồm hình ảnh, kích thước và các hàm hỗ trợ Load và Render hình ảnh của đối tượng.
